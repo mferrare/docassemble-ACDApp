@@ -4,103 +4,105 @@ attachment:
     filename: Advanced_Care_Directive_Form_SA
     pdf template file: WEB_FILLABLE_ACD_FORM_2019.pdf
     fields: 
-      - "Text46"        : ${ part1_name }
-      - "Text47"        : ${ part1_address_full }
-      - "Text49"        : ${ part1_phone }
-      - "Text20"        : ${ part1_dob_day }
-      - "Text21"        : ${ part1_dob_month }
-      - "Text22"        : ${ part1_dob_year }
-      - "Text48"        : ${ part2a_1_i_appoint }
-      - "Text50"        : ${ part2a_1_address_full } 
-      - "Text51"        : ${ part2a_1_phone }
-      - "Text23"        : ${ part2a_1_dob_day }
-      - "Text24"        : ${ part2a_1_dob_month }
-      - "Text25"        : ${ part2a_1_dob_year }
-      - "Text52"        : ${ part2a_1_substitute_name }
-      - "Signed"        : ${ part2a_1_signature }
-      - "Date"          : ${ part2a_1_signdate_day }
-      - "undefined"     : ${ part2a_1_signdate_month }
-      - "undefined_2"   : ${ part2a_1_signdate_year }
-      - "initial"       : ${ part2a_1_initial }
-      - "initial_2"     : ${ part2a_1_initial_witness }
-      - "Date_2"        : ${ part2a_1_initial_day }
-      - "undefined_3"   : ${ part2a_1_initial_month }
-      - "undefined_4"   : ${ part2a_1_initial_year }
-      - "this Part please" : ${ part2a_1_jp_stamp }
-      - "Text53"        : ${ part2a_2_i_appoint }
-      - "Text54"        : ${ part2a_2_address_full }
-      - "Text55"        : ${ part2a_2_phone } 
-      - "fill_1"        : ${ part2a_2_dob_day }
-      - "undefined_5"   : ${ part2a_2_dob_month }
-      - "undefined_6"   : ${ part2a_2_dob_year }
-      - "Text56"        : ${ part2a_2_substitute_name }
-      - "Text57"        : ${ part2a_2_signature }
-      - "Date_3"        : ${ part2a_2_signdate_day }
-      - "undefined_7"   : ${ part2a_2_signdate_month }
-      - "undefined_8"   : ${ part2a_2_signdate_year }
-      - "Text58"        : ${ part2a_3_i_appoint }
-      - "Text59"        : ${ part2a_3_address_full } 
-      - "Text60"        : ${ part2a_3_phone }
-      - "Date of birth" : ${ part2a_3_dob_day }
-      - "undefined_9"   : ${ part2a_3_dob_month }
-      - "undefined_10"  : ${ part2a_3_dob_year }
-      - "Text61"        : ${ part2a_3_substitute_name }
-      - "Text62"        : ${ part2a_3_signature }
-      - "Date_4"        : ${ part2a_3_signdate_day }
-      - "undefined_11"  : ${ part2a_3_signdate_month }
-      - "undefined_12"  : ${ part2a_3_signdate_year }
-      - "Text63"        : ${ part2b_together_or_separately }
-      - "initial_3"     : ${ part2b_initial }
-      - "initial_4"     : ${ part2b_initial_witness }
-      - "Date_5"        : ${ part2b_date_day }
-      - "undefined_13"  : ${ part2b_date_month }
-      - "undefine_14"   : ${ part2b_date_year }
-      - "Text64"        : ${ part3_considerations }
-      - "Text65"        : ${ part3_outcomes }
-      - "Text66"        : ${ part3_preferences }
-      - "initial_5"     : ${ part3_p3_initial }
-      - "initial_6"     : ${ part3_p3_initial_witness }
-      - "Date_6"        : ${ part3_p3_date_day }
-      - "undefined_15"  : ${ part3_p3_date_month }
-      - "undefined_16"  : ${ part3_p3_date_year }
-      - "Text67"        : ${ part3_residence }
-      - "Text68"        : ${ part3_other_arrangements }
-      - "Text69"        : ${ part3_dying_wishes }
-      - "initial_7"     : ${ part3_p4_initial }
-      - "initial_8"     : ${ part3_p4_initial_witness }
-      - "Date_7"        : ${ part3_p4_date_day }
-      - "undefined_17"  : ${ part3_p4_date_month }
-      - "undefined_18"  : ${ part3_p4_date_year }
-      - "Text70"        : ${ part4_binding_refusals }
-      - "Text71"        : ${ part5_interpreter_name }
-      - "Text72"        : ${ part5_acd_person }
-      - "Text73"        : ${ part5_phone }
-      - "Text74"        : ${ part5_full_address }
-      - "Text75"        : ${ part5_signature }
-      - "Date_8"        : ${ part5_signature_date_day }
-      - "undefined_19"  : ${ part5_signature_date_month }
-      - "undefined_20"  : ${ part5_signature_date_year }
-      - "initial_5"     : ${ part5_p5_initial }
-      - "initial_6"     : ${ part5_p5_initial_witness }
-      - "Date_6"        : ${ part5_p5_date_day }
-      - "undefined_15"  : ${ part5_p5_date_month }
-      - "undefined_16"  : ${ part5_p5_date_year }
-      - "Text1"         : ${ part6_acd_person }
-      - "Text2"         : ${ part6_signature }
-      - "Text3"         : ${ part6_date_day }
-      - "Text4"         : ${ part6_date_month }
-      - "Text5"         : ${ part6_date_year }
-      - "Text6"         : ${ part6_witness_full_name }
-      - "Text7"         : ${ part6_acd_person }
-      - "Text8"         : ${ part6_witness_category }
-      - "Text9"         : ${ part6_witness_phone }
-      - "Text10"        : ${ part6_witness_signature }
-      - "Text11"        : ${ part6_witness_date_day }
-      - "Text12"        : ${ part6_witness_date_month }
-      - "Text13"        : ${ part6_witness_date_year }
-      - "Text14"        : ${ part6_execution_statement }
-      - "Tet15"         : ${ part6_p6_initial }
-      - "Text16"        : ${ part6_p6_initial_witness }
-      - "Text17"        : ${ part6_p6_date_day }
-      - "Text18"        : ${ part6_p6_date_month }
-      - "Text19"        : ${ part6_p6_date_year }
+      - "Text46"        : ${ part1.name.full(middle="full") }
+      - "Text47"        : ${ part1.formatted_address }
+      - "Text49"        : ${ part1.phone_number }
+      - "Text20"        : ${ part1.birthdate.day }
+      - "Text21"        : ${ part1.birthdate.month }
+      - "Text22"        : ${ part1.birthdate.year }
+    
+      - "Text48"        : ${ part2[0].name.full(middle="full") }
+      - "Text50"        : ${ part2[0].formatted_address } 
+      - "Text51"        : ${ part2[0].phone_number }
+      - "Text23"        : ${ part2[0].birthdate.day }
+      - "Text24"        : ${ part2[0].birthdate.month }
+      - "Text25"        : ${ part2[0].birthdate.year }
+      - "Text52"        : ${ part2[0].name.full(middle="full") }
+      # - "Signed"        : ${ part2[0]_signature }
+      # - "Date"          : ${ part2a_1_signdate_day }
+      # - "undefined"     : ${ part2a_1_signdate_month }
+      # - "undefined_2"   : ${ part2a_1_signdate_year }
+      # - "initial"       : ${ part2a_1_initial }
+      # - "initial_2"     : ${ part2a_1_initial_witness }
+      # - "Date_2"        : ${ part2a_1_initial_day }
+      # - "undefined_3"   : ${ part2a_1_initial_month }
+      # - "undefined_4"   : ${ part2a_1_initial_year }
+      # - "this Part please" : ${ part2a_1_jp_stamp }
+      - "Text53"        : ${ part2[1].name.full(middle="full") }
+      - "Text54"        : ${ part2[1].formatted_address }
+      - "Text55"        : ${ part2[1].phone_number } 
+      - "fill_1"        : ${ part2[1].birthdate.day }
+      - "undefined_5"   : ${ part2[1].birthdate.month }
+      - "undefined_6"   : ${ part2[1].birthdate.year }
+      - "Text56"        : ${ part2[1].name.full(middle="full") }
+      # - "Text57"        : ${ part2[1]signature }
+      # - "Date_3"        : ${ part2a_2_signdate_day }
+      # - "undefined_7"   : ${ part2a_2_signdate_month }
+      # - "undefined_8"   : ${ part2a_2_signdate_year }
+      - "Text58"        : ${ part2[2].name.full(middle="full") }
+      - "Text59"        : ${ part2[2].formatted_address } 
+      - "Text60"        : ${ part2[2].phone_number }
+      - "Date of birth" : ${ part2[2].birthdate.day }
+      - "undefined_9"   : ${ part2[2].birthdate.month }
+      - "undefined_10"  : ${ part2[2].birthdate.year }
+      - "Text61"        : ${ part2[2].name.full(middle="full") }
+      # - "Text62"        : ${ part2[2]signature }
+      # - "Date_4"        : ${ part2a_3_signdate_day }
+      # - "undefined_11"  : ${ part2a_3_signdate_month }
+      # - "undefined_12"  : ${ part2a_3_signdate_year }
+      # - "Text63"        : ${ part2b_together_or_separately }
+      # - "initial_3"     : ${ part2b_initial }
+      # - "initial_4"     : ${ part2b_initial_witness }
+      # - "Date_5"        : ${ part2b_date_day }
+      # - "undefined_13"  : ${ part2b_date_month }
+      # - "undefine_14"   : ${ part2b_date_year }
+      # - "Text64"        : ${ part3_considerations }
+      # - "Text65"        : ${ part3_outcomes }
+      # - "Text66"        : ${ part3_preferences }
+      # - "initial_5"     : ${ part3_p3_initial }
+      # - "initial_6"     : ${ part3_p3_initial_witness }
+      # - "Date_6"        : ${ part3_p3_date_day }
+      # - "undefined_15"  : ${ part3_p3_date_month }
+      # - "undefined_16"  : ${ part3_p3_date_year }
+      # - "Text67"        : ${ part3_residence }
+      # - "Text68"        : ${ part3_other_arrangements }
+      # - "Text69"        : ${ part3_dying_wishes }
+      # - "initial_7"     : ${ part3_p4_initial }
+      # - "initial_8"     : ${ part3_p4_initial_witness }
+      # - "Date_7"        : ${ part3_p4_date_day }
+      # - "undefined_17"  : ${ part3_p4_date_month }
+      # - "undefined_18"  : ${ part3_p4_date_year }
+      # - "Text70"        : ${ part4_binding_refusals }
+      # - "Text71"        : ${ part5_interpreter_name }
+      # - "Text72"        : ${ part5_acd_person }
+      # - "Text73"        : ${ part5_phone }
+      # - "Text74"        : ${ part5_full_address }
+      # - "Text75"        : ${ part5_signature }
+      # - "Date_8"        : ${ part5_signature_date_day }
+      # - "undefined_19"  : ${ part5_signature_date_month }
+      # - "undefined_20"  : ${ part5_signature_date_year }
+      # - "initial_5"     : ${ part5_p5_initial }
+      # - "initial_6"     : ${ part5_p5_initial_witness }
+      # - "Date_6"        : ${ part5_p5_date_day }
+      # - "undefined_15"  : ${ part5_p5_date_month }
+      # - "undefined_16"  : ${ part5_p5_date_year }
+      # - "Text1"         : ${ part6_acd_person }
+      # - "Text2"         : ${ part6_signature }
+      # - "Text3"         : ${ part6_date_day }
+      # - "Text4"         : ${ part6_date_month }
+      # - "Text5"         : ${ part6_date_year }
+      # - "Text6"         : ${ part6_witness_full_name }
+      # - "Text7"         : ${ part6_acd_person }
+      # - "Text8"         : ${ part6_witness_category }
+      # - "Text9"         : ${ part6_witness_phone }
+      # - "Text10"        : ${ part6_witness_signature }
+      # - "Text11"        : ${ part6_witness_date_day }
+      # - "Text12"        : ${ part6_witness_date_month }
+      # - "Text13"        : ${ part6_witness_date_year }
+      # - "Text14"        : ${ part6_execution_statement }
+      # - "Tet15"         : ${ part6_p6_initial }
+      # - "Text16"        : ${ part6_p6_initial_witness }
+      # - "Text17"        : ${ part6_p6_date_day }
+      # - "Text18"        : ${ part6_p6_date_month }
+      # - "Text19"        : ${ part6_p6_date_year }
+---

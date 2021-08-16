@@ -1,0 +1,9 @@
+# Store constants in this object
+objects: 
+  - ACDconstants: DAObject
+---
+# Set the constants here
+code: |
+  # The ACD form at time of writing allows for 3 DMs only.
+  ACDconstants.max_decision_makers = 3
+---

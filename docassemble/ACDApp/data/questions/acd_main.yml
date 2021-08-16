@@ -1,0 +1,73 @@
+include:
+  - acd_constants.yml
+  - acd_questions.yml
+  - acd_questions_part2.yml
+  - acd_attachment.yml
+---
+# Address should be formatted correctly and not
+# using US rules
+mandatory: True
+code: |
+  part1.address.international = True
+  part1.address.country = 'AU'
+---
+# Welcome Screen
+mandatory: true
+question: Advanced Care Directive Automated Form
+subquestion: |
+  This app will walk you through completing an Advanced Care 
+  Directive form.
+
+  Some more text to go here describing the app.
+
+  Remember to state that assuming that the person using this app
+  is the person for whom the ACD will be completed.
+
+  Maybe a disclaimer as well.
+buttons: 
+  - Continue: continue
+  - Exit: exit
+---
+# This is the code block that drives everything
+mandatory: True
+code: |
+  # Start off by asking the details of the
+  # person completing the ACD
+
+  # Will call questions by picking first question in each
+  # question block for now
+
+  # We always call Part 1
+  part1.name.first
+  part1.address.address
+  part1.phone_number
+
+  # Get substitute decision-makers if we have any
+  process_part_2
+  # We we don't have all the SDMs then we fill in the 
+  # missing ones with blanks
+  process_part_2_blanks
+---
+mandatory: true
+question: Final Screen
+subquestion: |
+
+  Field | Value
+  ---|---
+  **Name:**     | ${part1.name.full(middle="full")}
+  **Address:**  | ${part1.formatted_address}
+  **Phone:**    | ${part1.phone_number }
+  **DOB:**      | ${format_datetime(part1.birthdate, format="dd/MM/yyyy")}
+  % for a_name in part2:
+  **SDM Name**:  | ${a_name.name.full(middle="full")}
+  **SDM Phone**: | ${a_name.phone_number}
+  % endfor
+
+  ${ acd_form }
+---
+# We want the address formatted on a single line in the usual
+# Australian way
+generic object: Individual
+code: |
+  x.formatted_address = '{} {} {} {}'.format(x.address.address, x.address.city.upper(), x.address.state, x.address.postal_code)
+---

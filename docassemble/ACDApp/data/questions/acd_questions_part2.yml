@@ -1,0 +1,92 @@
+# Substitute Decision-makers are collected into part2 which is
+# a list of Individuals.  The list needs to be limited to three
+# and must have at least one if have_sdm is true.
+---
+objects:
+  - part2: DAList.using(object_type=Individual)
+---
+# Processes the part 2 Individuals
+code: |
+  # This gets us everything
+  for a_sdm in part2:
+    a_sdm
+  process_part_2 = True
+---
+# Fills any missing SDMs with empty values so we can still
+# populate the PDF
+code: |
+  part2_len = len(part2)
+  # If we're full we don't do anything
+  if part2_len == ACDconstants.max_decision_makers:
+    process_part_2_blanks = True
+  
+  # Otherwise we fill in the blanks
+  for ACDindex in range(part2_len, ACDconstants.max_decision_makers):
+    part2[ACDindex] = DAEmpty()
+  process_part_2_blanks = True
+---
+# Set there_are_any depending on the answer of have_sdm
+code: |
+  if has_sdm:
+    part2.there_are_any = True
+  else:
+    part2.there_are_any = False
+---
+# But we set there_is_another to true only if we don't have
+# three DMs
+code: |
+  part2_len = len(part2)
+  part2_index = part2_len - 1
+  if  part2_len < ACDconstants.max_decision_makers and part2[part2_index].another_dm:
+    part2.there_is_another = True
+  else:
+    part2.there_is_another = False
+---
+question: Substitute Decision-makers
+subquestion: |
+  You must provide the Substitute Decision-Maker 
+  with the Substitute Decision-Maker Guidelines prior to 
+  completing this section.
+
+  Text about SDMs
+
+  Would you like to add one or more substitute decision-makers?
+yesno: has_sdm
+---
+question: Substitute Decision-makers
+subquestion: |
+  Who do you appoint as your ${ ordinal(i) } substitute
+  decision-maker?
+fields:
+  - First name: part2[i].name.first
+  - Middle name: part2[i].name.middle
+  - Last name: part2[i].name.last
+  - Date of birth: part2[i].birthdate
+    datatype: date
+  - Phone number: part2[i].phone_number
+  - Unit: part2[i].address.unit
+    required: false
+  - Number and street:  part2[i].address.address
+    default: ${ i } Booga Road
+  - Suburb: part2[i].address.city
+    default: Dogaloolo
+  - Postcode: part2[i].address.postal_code
+    default: 5093
+  - State: part2[i].address.state
+    choices:
+      - ACT: ACT
+      - New South Wales: NSW
+      - Northern Territory: NT
+      - Queensland: QLD
+      - South Australia: SA
+      - Tasmania: Tas
+      - Western Australia: WA
+      - Victoria: Vic
+    default: SA
+---
+# Ask if we want to add another DM
+question: Would you like to add another decision-maker?
+subquestion: |
+  I is ${ i }
+yesno: part2[i].another_dm
+---
