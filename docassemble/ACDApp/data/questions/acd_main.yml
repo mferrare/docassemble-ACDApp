@@ -58,7 +58,9 @@ subquestion: |
   **Address:**  | ${part1.formatted_address}
   **Phone:**    | ${part1.phone_number }
   **DOB:**      | ${format_datetime(part1.birthdate, format="dd/MM/yyyy")}
-  % for a_name in part2:
+
+  % for a_name in part2a:
+
   **SDM Name**:  | ${a_name.name.full(middle="full")}
   **SDM Phone**: | ${a_name.phone_number}
   % endfor
