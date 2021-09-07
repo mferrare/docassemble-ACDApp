@@ -1,0 +1,82 @@
+# Finally!  This file contains questions and code for Part 6 of the ACD statement
+# which is the signing in front of a witness
+# We ask for witness details but they're not compulsory.  We'll leave them blank
+# if the user doesn't fill them out.
+# No 'z' parts here thankfully!
+---
+# Store our witness here
+objects:
+  - part6: Individual
+---
+question: "Part 6: Witnessing my Advanced Care Directive"
+subquestion: |
+  You and your witness must sign Part 6 of this form and also initial every page
+  in the space provided.
+
+  Your witness must be a person from an authorised category (see the drop-down menu
+   below)
+
+   Your witness must be independent of you.  This means they cannot be:
+
+   * a beneficiary in your will (eg: a family member)
+   * appointed as a Substitute Decision-Maker;
+   * your health practitioner; or
+   * your paid carer.
+
+  If you don't yet know who will witness your ACD, you may skip this page.
+fields:
+  - Witness first name: part6.name.first
+    required: false
+  - Witness middle name: part6.name.middle
+    required: false
+  - Witness last name: part6.name.last
+    required: False
+  - Witness phone number: part6.phone_number
+    required: false
+  - Witness Authorised  Category: part6.category
+    required: False
+    choices:
+      - Australia Post agent with more than 5 years of service: Australia Post agent
+      - Australian Consular Officer
+      - Australian Defence Force Officer with more than 5 years service: Australian Defence Force Officer
+      - Australian Defence Force non-Commissioned Officer with more than 5 years service: Australian Defence Force Officer
+      - Australian Defence Force Warrant Officer with more than 5 years service: Australian Defence Force Officer
+      - Australian Diplomatic Officer
+      - Bailiff
+      - Bank Manager
+      - Chief Executive OFficer of Commonwealth Court
+      - Clerk of Court
+      - Commissioner for taking affidavits and/or declarations
+      - Commonwealth employee outside Australia
+      - Deputy Registrar of Court
+      - Doctor
+      - "Fellow of the National Tax and Accountants' Association"
+      - Government employee with more than 5 years of service: Government employee
+      - Judge
+      - Justice of the Peace
+      - Lawyer
+      - Magistrate
+      - Marriage celebrant
+      - Master of Court
+      - Member of Association of Taxation and Management Accountants
+      - Member of Australasian Institute of Mining and Metallurgy
+      - Member of CPA Australia
+      - Member of Governance Institute of Australia
+      - Member of Engineers Australia
+      - Member of Institute of Chartered Accountants in Australia
+      - Member of the Institute of Public Accountants
+      - Member of Parliament
+      - Member of local, State or Territory government authority
+      - Minister of religion
+      - Notary public
+      - Nurse
+      - Patent or Trade Mark Attorney
+      - Pharmacist
+      - Police Officer
+      - Registrar of Court
+      - Sheriff
+      - "Sheriff's Officer"
+      - Statutory Office Holder
+      - Teacher - Primary School: Teacher
+      - Teacher - Secondary School: Teacher
+      - Veterniary surgeon

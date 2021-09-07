@@ -1,0 +1,57 @@
+# This file deals with part 3 of the ACD form.
+
+# We'll collect all the answers into a dictionary
+# Each key will be the number of the question ie: 'a', 'b' etc
+---
+objects:
+  part3: DADict
+---
+# We'll store the answers in a list as they're all asked the same way
+variable name: part3
+use objects: true
+data:
+  - subquestion: |
+      In Part 3 of your Advance Care Directive you can specify what kinds of decisions
+      can be made for you, what you wish to avoid, what kind of health care you prefer
+      and so-on.  
+
+      If you do not wish to answer any of these questions, just press **Continue** to skip
+      to the next question.
+      <hr>
+      a) When decisions are being made for me, I want people to consider the following:
+  - subquestion: |
+      b) Outcomes of care I wish to avoid (what I don't want to happen to me):
+  - subquestion: |
+      c) Health care I prefer:
+  - subquestion: |
+      d) Where I wish to live:
+  - subquestion: |
+      e) Other personal arrangements:
+  - subquestion: |
+      f) Dying wishes:
+---
+# All questions in Part 3 have the same question: value
+code: |
+  part3_question_text = 'Part 3: What is important to me - my values and wishes'
+---
+# Generic question block
+question: ${ part3_question_text }
+subquestion: |
+  ${ part3[i]['subquestion'] }
+fields:
+  - no label: part3[i]['answer']
+    input type: area
+    required: false
+---
+# 'Format' the answers.
+# - if there is an answer, we just display that
+# - if there isn't an answer then we have to put a Z
+#   across that field and insert an empty formatted answer
+#   to keep the python gods happy
+code: |
+  part3[i]['formatted_answer'] = part3[i]['answer']
+  if part3[i]['answer'] == "":
+    part3[i]['z'] = "Z"
+  else:
+    part3[i]['z'] = ""
+---

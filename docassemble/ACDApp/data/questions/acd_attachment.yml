@@ -1,3 +1,25 @@
+---
+question: Your Advance Care Directive
+subquestion: |
+  Your Advance Care Directive is ready for you to download, print and sign.
+
+  **Remember that**:
+
+  * Your Substitute Decision-Makers (if any), must sign Part 2a of the form before you do
+  * Your witness must be *independent of you*
+  * Your witness must be from one of the authorised witness categories specified in this
+    app.  The full list can also be [viewed here](https://advancecaredirectives.sa.gov.au/information-for-you/additional-information/authorised-witnesses)
+  * Your witness must witness your signature
+  * Your witness must fulfil their [witness obligations](https://advancecaredirectives.sa.gov.au/14011/witnesses)
+
+  If you'd like advice on your Advance Care Directive please [contact us](https://ezralegal.com.au/contact-us/)
+  <hr>
+  ${ acd_form }
+buttons:
+  - Exit: exit
+    url: https://ezralegal.com.au
+  - Restart: restart
+---
 attachment:
     variable name: acd_form
     name: Advanced Care Directive Form (SA)
@@ -59,27 +81,35 @@ attachment:
       # - "Date_5"        : ${ part2ab_date_day }
       # - "undefined_13"  : ${ part2ab_date_month }
       # - "undefine_14"   : ${ part2ab_date_year }
-      # - "Text64"        : ${ part3_considerations }
-      # - "Text65"        : ${ part3_outcomes }
-      # - "Text66"        : ${ part3_preferences }
+      - "Text64"        : ${ part3[0]['answer'] }
+      - "part3_za"      : ${ part3[0]['z']}
+      - "Text65"        : ${ part3[1]['answer'] }
+      - "part3_zb"      : ${ part3[1]['z']}
+      - "Text66"        : ${ part3[2]['answer'] }
+      - "part3_zc"      : ${ part3[2]['z']}
       # - "initial_5"     : ${ part3_p3_initial }
       # - "initial_6"     : ${ part3_p3_initial_witness }
       # - "Date_6"        : ${ part3_p3_date_day }
       # - "undefined_15"  : ${ part3_p3_date_month }
       # - "undefined_16"  : ${ part3_p3_date_year }
-      # - "Text67"        : ${ part3_residence }
-      # - "Text68"        : ${ part3_other_arrangements }
-      # - "Text69"        : ${ part3_dying_wishes }
+      - "Text67"        : ${ part3[3]['answer'] }
+      - "part3_zd"      : ${ part3[3]['z']}
+      - "Text68"        : ${ part3[4]['answer'] }
+      - "part3_ze"      : ${ part3[4]['z']}
+      - "Text69"        : ${ part3[5]['answer'] }
+      - "part3_zf"      : ${ part3[5]['z']}
       # - "initial_7"     : ${ part3_p4_initial }
       # - "initial_8"     : ${ part3_p4_initial_witness }
       # - "Date_7"        : ${ part3_p4_date_day }
       # - "undefined_17"  : ${ part3_p4_date_month }
       # - "undefined_18"  : ${ part3_p4_date_year }
-      # - "Text70"        : ${ part4_binding_refusals }
-      # - "Text71"        : ${ part5_interpreter_name }
-      # - "Text72"        : ${ part5_acd_person }
-      # - "Text73"        : ${ part5_phone }
-      # - "Text74"        : ${ part5_full_address }
+      - "Text70"        : ${ part4.formatted_answer }
+      - "part4_z"       : ${ part4.z }
+      - "Text71"        : ${ part5.full_name }
+      - "Text72"        : ${ part5.acd_owner }
+      - "Text73"        : ${ part5.formatted_phone }
+      - "Text74"        : ${ part5.formatted_address }
+      - "part5_z"       : ${ part5.z }
       # - "Text75"        : ${ part5_signature }
       # - "Date_8"        : ${ part5_signature_date_day }
       # - "undefined_19"  : ${ part5_signature_date_month }
@@ -89,15 +119,15 @@ attachment:
       # - "Date_6"        : ${ part5_p5_date_day }
       # - "undefined_15"  : ${ part5_p5_date_month }
       # - "undefined_16"  : ${ part5_p5_date_year }
-      # - "Text1"         : ${ part6_acd_person }
+      - "Text1"         : ${ part1.full_name }
       # - "Text2"         : ${ part6_signature }
       # - "Text3"         : ${ part6_date_day }
       # - "Text4"         : ${ part6_date_month }
       # - "Text5"         : ${ part6_date_year }
-      # - "Text6"         : ${ part6_witness_full_name }
-      # - "Text7"         : ${ part6_acd_person }
-      # - "Text8"         : ${ part6_witness_category }
-      # - "Text9"         : ${ part6_witness_phone }
+      - "Text6"         : ${ part6.full_name }
+      - "Text7"         : ${ part1.full_name }
+      - "Text8"         : ${ part6.category }
+      - "Text9"         : ${ part6.formatted_phone }
       # - "Text10"        : ${ part6_witness_signature }
       # - "Text11"        : ${ part6_witness_date_day }
       # - "Text12"        : ${ part6_witness_date_month }

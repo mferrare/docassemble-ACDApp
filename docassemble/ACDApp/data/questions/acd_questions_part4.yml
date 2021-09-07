@@ -1,0 +1,31 @@
+# Ask the (single) question for part 4 here
+
+# We'll store the answer in an object so we can associate the 'z' with the answer
+---
+objects:
+  part4: DAObject
+---
+# Ask the question
+question: "Part 4: Binding refusals of health care"
+subquestion: |
+  If you are indicating health care you do not want, you must state when and in
+  what circumstances it will apply as your refusal(s) must be followed, pursuant
+  to section 19 of the Act, if relevant and applicable)
+fields:
+  - Do you wish to make any binding refusals of health care?: part4.wish
+    datatype: yesnoradio
+  - I make the following binding refusal/s of particular health care: part4.answer
+    input type: area
+    show if:
+      variable: part4.wish
+      is: true
+---
+# Format the output here and set a 'z' if we need to
+code: |
+  if part4.wish:
+    part4.formatted_answer = part4.answer
+    part4.z = ""
+  else:
+    part4.formatted_answer = ""
+    part4.z = "Z"
+---

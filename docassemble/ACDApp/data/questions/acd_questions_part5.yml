@@ -1,0 +1,74 @@
+# Questions and code for part 5 of the form
+---
+# Store our answers in an Individual(), so we get the name
+# and the address goodness
+objects:
+  - part5: Individual
+---
+question: Details of interpreter
+subquestion: |
+  If an interpreter helped you complete this Advance Care Directive, they
+  will need to sign your form.
+
+  If you have used an interpreter, please enter their details here.
+fields:
+  - Did an interpreter help you to complete this form?: part5.used_interpreter
+    datatype: yesnoradio
+  - Interpreter's full name: part5.name
+    show if:
+      variable: part5.used_interpreter
+      is: true
+  - Interpreter's phone number: part5.phone_number
+    show if:
+      variable: part5.used_interpreter
+      is: true
+  - Unit: part5.address.unit
+    required: false
+    show if:
+      variable: part5.used_interpreter
+      is: true
+  - Number and street:  part5.address.address
+    default: 6B Interpreter Road
+    show if:
+      variable: part5.used_interpreter
+      is: true
+  - Suburb: part5.address.city
+    default: Dogaloolo
+    show if:
+      variable: part5.used_interpreter
+      is: true
+  - Postcode: part5.address.postal_code
+    default: 5093
+    show if:
+      variable: part5.used_interpreter
+      is: true
+  - State: part5.address.state
+    choices:
+      - ACT: ACT
+      - New South Wales: NSW
+      - Northern Territory: NT
+      - Queensland: QLD
+      - South Australia: SA
+      - Tasmania: Tas
+      - Western Australia: WA
+      - Victoria: Vic
+    default: SA
+    show if:
+      variable: part5.used_interpreter
+      is: true
+---
+# If we don't have an interpreter we need to set the values to ""
+# and the 'z'.  Otherwise, we'll leave it to the generic object
+# to do the rest of the work
+code: |
+  if not part5.used_interpreter:
+    part5.full_name = ""
+    part5.formatted_address = ""
+    part5.formatted_phone = ""
+    part5.acd_owner = ""
+    part5.z = "Z"
+  else:
+    # Only set the name of the ACD owner (from part 1)
+    # Everything else is formatted using the generic object
+    part5.acd_owner = part1.full_name
+---

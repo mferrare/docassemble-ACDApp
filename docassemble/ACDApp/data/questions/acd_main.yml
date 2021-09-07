@@ -1,7 +1,11 @@
 include:
   - acd_constants.yml
-  - acd_questions.yml
+  - acd_questions_part1.yml
   - acd_questions_part2.yml
+  - acd_questions_part3.yml
+  - acd_questions_part4.yml
+  - acd_questions_part5.yml
+  - acd_questions_part6.yml
   - acd_attachment.yml
 ---
 # Address should be formatted correctly and not
@@ -11,22 +15,70 @@ code: |
   part1.address.international = True
   part1.address.country = 'AU'
 ---
+# Logo
+objects:
+  - EzraLogo: DAStaticFile.using(filename="Ezra-Legal-Logo-web-white-orange.png")
+---
+initial: True
+code: |
+  ACDlogo = '<div class="media"><img src="{}" class="mr-3" height="40"><div class="media-body"></div></div>'.format(EzraLogo.url_for())
+  set_parts(logo=ACDlogo)
+ 
+  # Make the the title/logo function as a clickable link to restart the
+  # app.
+  log(
+    "var dapagetitle = $('#dapagetitle');" +
+    "function confirmAndRestart() {" +
+    "  var restart = confirm('This will return you to the home page, clearing the current report. Are you sure you want to restart?');" +
+    "  if (restart) {" +
+    "    window.location.href = '" + url_of('restart') + "';" +
+    "  }" +
+    "}" +
+    "dapagetitle.attr('href', 'javascript:confirmAndRestart()');" +
+    "dapagetitle.attr('title', 'Restart & return to home page')",
+    "javascript"
+  )
+---
+features:
+  css: ACDApp.css
+  question back button: True
+  navigation back button: False
+---
+default screen parts:
+  post: |
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unna&display=swap" rel="stylesheet">
+---
 # Welcome Screen
 mandatory: true
-question: Advanced Care Directive Automated Form
+question: Advance Care Directive Form
 subquestion: |
-  This app will walk you through completing an Advanced Care 
-  Directive form.
+  This app will guide you through completing an Advanced Care 
+  Directive form which you can then print out and sign.
 
-  Some more text to go here describing the app.
+  **An Advance Care Directive is a legal form that allows people over the age of 18 years to:**
 
-  Remember to state that assuming that the person using this app
-  is the person for whom the ACD will be completed.
+  * write down your wishes, preferences and instructions for future health care, end of
+  life, living arrangements and personal matters and/or
+  * appoint one or more Substitute Decision-Makers to make these decisions on your
+  behalf when you are unable to do so yourself.
 
-  Maybe a disclaimer as well.
+  **Your Advance Care Directive Form must be printed, signed and witnessed**
+
+  Your witness also has obligations which must be completed when the form is signed.
+  For more information, please see the SA Health [Advance Care Directive website](https://advancecaredirectives.sa.gov.au/information-for-you/information-for-you)
+
+  **Disclaimer**
+
+  This app is not a substitute for legal advice.  If you would like help completing your
+  ACD please [contact us](https://ezralegal.com.au/contact-us/)
+
+  This app assumes that you (the person using this app) are the person for whom the
+  Advance Care Directive will be prepared.
 buttons: 
   - Continue: continue
   - Exit: exit
+    url: https://ezralegal.com.au
 ---
 # This is the code block that drives everything
 mandatory: True
@@ -47,25 +99,32 @@ code: |
   # We we don't have all the SDMs then we fill in the 
   # missing ones with blanks
   process_part_2_blanks
+
+  # The rest of the app is driven by the fields in the
+  # acd_form
+  final_screen
 ---
-mandatory: true
-question: Final Screen
+event: final_screen
+question: Your Advance Care Directive
 subquestion: |
+  Your Advance Care Directive is ready for you to download, print and sign.
 
-  Field | Value
-  ---|---
-  **Name:**     | ${part1.name.full(middle="full")}
-  **Address:**  | ${part1.formatted_address}
-  **Phone:**    | ${part1.phone_number }
-  **DOB:**      | ${format_datetime(part1.birthdate, format="dd/MM/yyyy")}
+  **Remember that**:
 
-  % for a_name in part2a:
+  * Your Substitute Decision-Makers (if any), must sign Part 2a of the form before you do
+  * Your witness must be *independent of you*
+  * Your witness must be from one of the authorised witness categories specified in this
+    app.  The full list can also be [viewed here](https://advancecaredirectives.sa.gov.au/information-for-you/additional-information/authorised-witnesses)
+  * Your witness must witness your signature
+  * Your witness must fulfil their [witness obligations](https://advancecaredirectives.sa.gov.au/14011/witnesses)
 
-  **SDM Name**:  | ${a_name.full_name}
-  **SDM Phone**: | ${a_name.formatted_phone}
-  % endfor
-
+  If you'd like advice on your Advance Care Directive please [contact us](https://ezralegal.com.au/contact-us/)
+  <hr>
   ${ acd_form }
+buttons: 
+  - Exit: exit
+    url: https://ezralegal.com.au
+  - Restart: restart
 ---
 # We want the address formatted on a single line in the usual
 # Australian way

@@ -43,24 +43,30 @@ code: |
   else:
     part2a.there_is_another = False
 ---
-question: Substitute Decision-makers
+question: "Part 2: Substitute Decision-Makers"
 subquestion: |
-  You must provide the Substitute Decision-Maker 
-  with the Substitute Decision-Maker Guidelines prior to 
-  completing this section.
+  If you wish, you may appoint up to three Substitute Decision-Makers.  A Substitute
+  Decision-Maker is a person who you allow to make decision regarding your care as set
+  out in this Advance Care Directive.
 
-  Text about SDMs
+  You do not need to appoint any Substitute Decision-Makers if you do not wish.
 
-  Would you like to add one or more substitute decision-makers?
+  if you do appoint Substitute Decision Maker(s), you must provide each
+  Substitute Decision-Maker with the 
+  [Substitute Decision-Maker Guidelines](https://advancecaredirectives.sa.gov.au/information-for-you/substitute-decision-makers)
+  prior to their signing Part 2a of your Advance Care Directive
+
+  **Would you like to add one or more substitute decision-makers?**
 yesno: has_sdm
 ---
-question: Substitute Decision-makers
+question: "Part 2: Substitute Decision-Makers"
 subquestion: |
   Who do you appoint as your ${ ordinal(i) } substitute
   decision-maker?
 fields:
   - First name: part2a[i].name.first
   - Middle name: part2a[i].name.middle
+    required: false
   - Last name: part2a[i].name.last
   - Date of birth: part2a[i].birthdate
     datatype: date
@@ -86,16 +92,20 @@ fields:
     default: SA
 ---
 # Ask if we want to add another DM
-question: Would you like to add another decision-maker?
+question: "Part 2: Substitute Decision-Makers"
 subquestion: |
-  I is ${ i }
+  Would you like to add another Substitute Decision-Maker?
 yesno: part2a[i].another_dm
 ---
 # Part 2b question
-question: Conditions of Appointment
+question: "Part 2b: Conditions of Appointment"
 subquestion: |
-  If you have appointed one or more Substitute Decision-Makers do
-  you want them to make decisions together or separately?
+  As you have selected more than one Substitute Decision-Maker, you need to specify
+  how you would like your Substitute Decision-Makers to co-operate when it comes to
+  making decisions about your care.
+
+  You may select from one of the pre-prepared statements below, or you can select '*I want
+  something else*' to specify your own instructions.
 fields:
   - no label: part2b_first_part
     datatype: radio
@@ -141,16 +151,23 @@ code: |
     x.full_name = x.name.full(middle="full")
     x.formatted_address = '{} {} {} {}'.format(x.address.address, x.address.city.upper(), x.address.state, x.address.postal_code)
     x.formatted_phone = x.phone_number
-    x.day = x.birthdate.day
-    x.month = x.birthdate.month
-    x.year = x.birthdate.year
     x.z = ""
   except:
     x.full_name = ""
     x.formatted_address = ""
     x.formatted_phone = ""
+    x.z = "Z"
+---
+# We do the birthdates separately as not all Individuals
+# required DOBs (eg: interpreter in part 5)
+generic object: Individual
+code: |
+  try:
+    x.day = x.birthdate.day
+    x.month = x.birthdate.month
+    x.year = x.birthdate.year
+  except:
     x.day = ""
     x.month = ""
     x.year = ""
-    x.z = "Z"
 ---
