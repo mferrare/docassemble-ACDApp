@@ -124,10 +124,10 @@ attachment:
       # - "Text3"         : ${ part6_date_day }
       # - "Text4"         : ${ part6_date_month }
       # - "Text5"         : ${ part6_date_year }
-      - "Text6"         : ${ part6.full_name }
+      - "Text6"         : ${ part6.name.full(middle="full") }
       - "Text7"         : ${ part1.full_name }
       - "Text8"         : ${ part6.category }
-      - "Text9"         : ${ part6.formatted_phone }
+      - "Text9"         : ${ part6.phone_number }
       # - "Text10"        : ${ part6_witness_signature }
       # - "Text11"        : ${ part6_witness_date_day }
       # - "Text12"        : ${ part6_witness_date_month }
