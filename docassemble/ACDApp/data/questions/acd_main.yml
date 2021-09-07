@@ -61,8 +61,8 @@ subquestion: |
 
   % for a_name in part2a:
 
-  **SDM Name**:  | ${a_name.name.full(middle="full")}
-  **SDM Phone**: | ${a_name.phone_number}
+  **SDM Name**:  | ${a_name.full_name}
+  **SDM Phone**: | ${a_name.formatted_phone}
   % endfor
 
   ${ acd_form }

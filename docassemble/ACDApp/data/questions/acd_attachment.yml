@@ -4,20 +4,21 @@ attachment:
     filename: Advanced_Care_Directive_Form_SA
     pdf template file: WEB_FILLABLE_ACD_FORM_2019.pdf
     fields: 
-      - "Text46"        : ${ part1.name.full(middle="full") }
+      - "Text46"        : ${ part1.full_name }
       - "Text47"        : ${ part1.formatted_address }
-      - "Text49"        : ${ part1.phone_number }
-      - "Text20"        : ${ part1.birthdate.day }
-      - "Text21"        : ${ part1.birthdate.month }
-      - "Text22"        : ${ part1.birthdate.year }
-    
-      - "Text48"        : ${ part2a[0].name.full(middle="full") }
+      - "Text49"        : ${ part1.formatted_phone }
+      - "Text20"        : ${ part1.day }
+      - "Text21"        : ${ part1.month }
+      - "Text22"        : ${ part1.year }
+
+      - "part2a_z1"     : ${ part2a[0].z } 
+      - "Text48"        : ${ part2a[0].full_name }
       - "Text50"        : ${ part2a[0].formatted_address } 
-      - "Text51"        : ${ part2a[0].phone_number }
-      - "Text23"        : ${ part2a[0].birthdate.day }
-      - "Text24"        : ${ part2a[0].birthdate.month }
-      - "Text25"        : ${ part2a[0].birthdate.year }
-      - "Text52"        : ${ part2a[0].name.full(middle="full") }
+      - "Text51"        : ${ part2a[0].formatted_phone }
+      - "Text23"        : ${ part2a[0].day }
+      - "Text24"        : ${ part2a[0].month }
+      - "Text25"        : ${ part2a[0].year }
+      - "Text52"        : ${ part2a[0].full_name }
       # - "Signed"        : ${ part2a[0]_signature }
       # - "Date"          : ${ part2aa_1_signdate_day }
       # - "undefined"     : ${ part2aa_1_signdate_month }
@@ -28,24 +29,26 @@ attachment:
       # - "undefined_3"   : ${ part2aa_1_initial_month }
       # - "undefined_4"   : ${ part2aa_1_initial_year }
       # - "this Part please" : ${ part2aa_1_jp_stamp }
-      - "Text53"        : ${ part2a[1].name.full(middle="full") }
+      - "part2a_z2"     : ${ part2a[1].z } 
+      - "Text53"        : ${ part2a[1].full_name }
       - "Text54"        : ${ part2a[1].formatted_address }
-      - "Text55"        : ${ part2a[1].phone_number } 
-      - "fill_1"        : ${ part2a[1].birthdate.day }
-      - "undefined_5"   : ${ part2a[1].birthdate.month }
-      - "undefined_6"   : ${ part2a[1].birthdate.year }
-      - "Text56"        : ${ part2a[1].name.full(middle="full") }
+      - "Text55"        : ${ part2a[1].formatted_phone } 
+      - "fill_1"        : ${ part2a[1].day }
+      - "undefined_5"   : ${ part2a[1].month }
+      - "undefined_6"   : ${ part2a[1].year }
+      - "Text56"        : ${ part2a[1].full_name }
       # - "Text57"        : ${ part2a[1]signature }
       # - "Date_3"        : ${ part2aa_2_signdate_day }
       # - "undefined_7"   : ${ part2aa_2_signdate_month }
       # - "undefined_8"   : ${ part2aa_2_signdate_year }
-      - "Text58"        : ${ part2a[2].name.full(middle="full") }
+      - "part2a_z3"     : ${ part2a[2].z } 
+      - "Text58"        : ${ part2a[2].full_name }
       - "Text59"        : ${ part2a[2].formatted_address } 
-      - "Text60"        : ${ part2a[2].phone_number }
-      - "Date of birth" : ${ part2a[2].birthdate.day }
-      - "undefined_9"   : ${ part2a[2].birthdate.month }
-      - "undefined_10"  : ${ part2a[2].birthdate.year }
-      - "Text61"        : ${ part2a[2].name.full(middle="full") }
+      - "Text60"        : ${ part2a[2].formatted_phone }
+      - "Date of birth" : ${ part2a[2].day }
+      - "undefined_9"   : ${ part2a[2].month }
+      - "undefined_10"  : ${ part2a[2].year }
+      - "Text61"        : ${ part2a[2].full_name }
       # - "Text62"        : ${ part2a[2]signature }
       # - "Date_4"        : ${ part2aa_3_signdate_day }
       # - "undefined_11"  : ${ part2aa_3_signdate_month }

@@ -18,14 +18,12 @@ code: |
 # Fills any missing SDMs with empty values so we can still
 # populate the PDF
 code: |
-  part2a_len = len(part2a)
-  # If we're full we don't do anything
-  if part2a_len == ACDconstants.max_decision_makers:
-    process_part_2_blanks = True
-  
-  # Otherwise we fill in the blanks
-  for ACDindex in range(part2a_len, ACDconstants.max_decision_makers):
-    part2a[ACDindex] = DAEmpty()
+  # Add empty Individual()s for the SDMs we don't have
+  for ACDindex in range(len(part2a), ACDconstants.max_decision_makers):
+    # Just get the value of 'z'.  The rest will get populated by the 
+    # generic object code block
+    part2a[ACDindex] = Individual()
+    part2a[ACDindex].z
   process_part_2_blanks = True
 ---
 # Set there_are_any depending on the answer of have_sdm
@@ -107,7 +105,7 @@ fields:
       - I want my Substitute Decision-Makers to come to a decision separately (any Decision-Maker can make a decision about me independently of the others)
       - I want something else: something_else
   - no label: part2b_second_part
-    datatype: textarea
+    input type: area
     hint: Type your instructions for your Substitute Decision-Makers here
     show if:
       variable: part2b_first_part
@@ -120,19 +118,39 @@ fields:
 # - Take the value of part2b_first_part unless it is 'something_else'
 # - otheriwse take the value of part2b_second_part
 code: |
-  # part2a always has three elements.  We need to count the number
-  # of non-None elements to work out how many SDMs are appointed
-  number_sdm = 0
-  for item in part2a:
-    if item is None:
-      break
+  # Count SDMs by counting the number of part2a[i].z that have a 'Z' value
+  number_sdms = 0
+  for an_item in part2a:
+    if an_item.z == "":
+      number_sdms += 1
     else:
-      number_sdm += 1
-  
-  if number_sdm <= 1:
+      break
+
+  if number_sdms <= 1:
     part2b = 'N/A'
   elif part2b_first_part != 'something_else':
     part2b = part2b_first_part
   else:
     part2b = part2b_second_part
+---
+# Populates the fields to display in the PDF
+# Also sets the 'Z' for part2b SDMs that are empty
+generic object: Individual
+code: |
+  try:
+    x.full_name = x.name.full(middle="full")
+    x.formatted_address = '{} {} {} {}'.format(x.address.address, x.address.city.upper(), x.address.state, x.address.postal_code)
+    x.formatted_phone = x.phone_number
+    x.day = x.birthdate.day
+    x.month = x.birthdate.month
+    x.year = x.birthdate.year
+    x.z = ""
+  except:
+    x.full_name = ""
+    x.formatted_address = ""
+    x.formatted_phone = ""
+    x.day = ""
+    x.month = ""
+    x.year = ""
+    x.z = "Z"
 ---
