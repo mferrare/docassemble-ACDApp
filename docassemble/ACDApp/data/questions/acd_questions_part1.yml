@@ -7,12 +7,9 @@ subquestion: |
   Advance Care Directive
 fields:
   - First name:   part1.name.first
-    default: Grenville
   - Middle name:  part1.name.middle
     required: false
-    default: Ayrton
   - Last name:    part1.name.last
-    default: Da Silva
 ---
 question: "Part 1: Personal Details"
 subquestion: |
@@ -22,11 +19,8 @@ fields:
   - Unit: part1.address.unit
     required: false
   - Number and street:  part1.address.address
-    default: 6B Crowning Road
   - Suburb: part1.address.city
-    default: Dogaloolo
   - Postcode: part1.address.postal_code
-    default: 5093
   - State: part1.address.state
     choices:
       - ACT: ACT
@@ -44,8 +38,6 @@ subquestion: |
   Enter contact phone number and date of birth
 fields:
   - Contact phone number: part1.phone_number
-    default: 1234 567 890
   - Date of Birth: part1.birthdate
     datatype: date
-    default: 01/07/1980
 

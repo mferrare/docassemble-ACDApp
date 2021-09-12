@@ -5,25 +5,50 @@
 objects:
   part4: DAObject
 ---
+variable name: part4DefaultMessage
+use objects: true
+data:
+  message: |
+    If I am in the terminal phase of a terminal illness or in a persistent vegetative state with no prospect of recovery, I direct that I only want those treatments that make me comfortable, relieve pain and preserve my dignity according to the prevailing standards of palliative care, even though any of those treatements may have the effect of shortening my life and that I do not want any procedures, medication, hydration or nutrients administered if their purpose is to delay my dying process.
+---
 # Ask the question
 question: "Part 4: Binding refusals of health care"
 subquestion: |
   If you are indicating health care you do not want, you must state when and in
   what circumstances it will apply as your refusal(s) must be followed, pursuant
   to section 19 of the Act, if relevant and applicable)
+
+  **Do you wish to make any binding refusals of health care?**
+yesno: part4.wish
+---
+# If Yes, then populate a default BRHC but give the user the option to edit it
+question: "Part 4: Binding refusals of health care"
+subquestion: |
+  You can choose to write your own binding refusal of health care, or you can accept
+  our standard clause which reads:
+
+  > ${ part4DefaultMessage['message'] }
+
+  <hr>
 fields:
-  - Do you wish to make any binding refusals of health care?: part4.wish
-    datatype: yesnoradio
+  - Do you want to write your own binding refusal of health care?: part4.custom
+    datatype: radio
+    choices:
+      - I want to use the standard clause: false
+      - I want to write my own binding refusal of health care: true
   - I make the following binding refusal/s of particular health care: part4.answer
     input type: area
     show if:
-      variable: part4.wish
+      variable: part4.custom
       is: true
 ---
 # Format the output here and set a 'z' if we need to
 code: |
   if part4.wish:
-    part4.formatted_answer = part4.answer
+    if part4.custom:
+      part4.formatted_answer = part4.answer
+    else:
+      part4.formatted_answer = part4DefaultMessage['message']
     part4.z = ""
   else:
     part4.formatted_answer = ""

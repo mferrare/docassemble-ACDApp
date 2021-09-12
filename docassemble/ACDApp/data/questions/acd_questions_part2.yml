@@ -74,11 +74,8 @@ fields:
   - Unit: part2a[i].address.unit
     required: false
   - Number and street:  part2a[i].address.address
-    default: ${ i } Booga Road
   - Suburb: part2a[i].address.city
-    default: Dogaloolo
   - Postcode: part2a[i].address.postal_code
-    default: 5093
   - State: part2a[i].address.state
     choices:
       - ACT: ACT
@@ -110,9 +107,8 @@ fields:
   - no label: part2b_first_part
     datatype: radio
     choices:
-      - I want my Substitute Decision-Makers to come to a decision together by consensus (all must agree)
-      - I want my Substitute Decision-Makers to come to a decision together by majority (two out of three must agree)
-      - I want my Substitute Decision-Makers to come to a decision separately (any Decision-Maker can make a decision about me independently of the others)
+      - Together
+      - Separately
       - I want something else: something_else
   - no label: part2b_second_part
     input type: area

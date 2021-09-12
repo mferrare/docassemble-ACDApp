@@ -10,3 +10,9 @@
 .container{
     font-family: 'Poppins', sans-serif;
 }
+
+.blockquote{
+    font-family: 'Poppins', sans-serif;
+    padding-left: 10%;
+    font-size: 0.85rem;
+}

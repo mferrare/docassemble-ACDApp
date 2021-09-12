@@ -28,17 +28,14 @@ fields:
       variable: part5.used_interpreter
       is: true
   - Number and street:  part5.address.address
-    default: 6B Interpreter Road
     show if:
       variable: part5.used_interpreter
       is: true
   - Suburb: part5.address.city
-    default: Dogaloolo
     show if:
       variable: part5.used_interpreter
       is: true
   - Postcode: part5.address.postal_code
-    default: 5093
     show if:
       variable: part5.used_interpreter
       is: true
