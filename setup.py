@@ -43,13 +43,13 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
     return out
 
 setup(name='docassemble.ACDApp',
-      version='0.0.1',
+      version='1.0',
       description=('An app to automate completing an Advanced Care Directive in South Australia'),
       long_description='# docassemble.ACDApp\n\nAn app to automate completing an Advanced Care Directive in South Australia\n\n## Author\n\nMark Ferraretto, mark@ferraretto.com\n\n',
       long_description_content_type='text/markdown',
       author='Mark Ferraretto',
       author_email='mark@ferraretto.com',
-      license='The MIT License (MIT)',
+      license='Copyright (C) 2021 Ezra Legal.  All Rights Reserved',
       url='https://docassemble.org',
       packages=find_packages(),
       namespace_packages=['docassemble'],
