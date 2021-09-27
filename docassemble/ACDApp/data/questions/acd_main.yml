@@ -120,6 +120,8 @@ subquestion: |
 
   If you'd like advice on your Advance Care Directive please [contact us](https://ezralegal.com.au/contact-us/)
   <hr>
+  **Click on the image below to download and print your Advance Care Directive**
+
   ${ acd_form }
 buttons: 
   - Exit: exit
