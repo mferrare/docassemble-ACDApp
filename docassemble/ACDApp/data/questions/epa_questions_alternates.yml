@@ -1,0 +1,48 @@
+# Collects information for Alternates.  Cannot collect for more than
+# three alternates
+---
+objects:
+  - epaAlternates: DAList.using(object_type=Individual, ask_number=True)
+---
+# Controls in advance how many donees we enter
+question: Alternate Donees
+subquestion: |
+  If for some reason your donees are unwilling or unable to exercise your power of attorney
+  you may appoint up to ${ nice_number(EPAconstants.max_alternates) } as alternate 
+  donees.
+
+  Text on when alternates come into play.
+
+  You may enter **0** if you do not want any alternates.
+
+  How many alternate donees would you like to include in your Power of Attorney?
+fields:
+  - Number of alternates: epaAlternates.target_number
+    datatype: integer
+    max: ${ EPAconstants.max_alternates }
+---
+question: Alternate Donees
+subquestion: |
+  Enter details for the ${ ordinal(i) } alternate donee.
+fields:
+  - First name: epaAlternates[i].name.first
+  - Middle name: epaAlternates[i].name.middle
+    required: false
+  - Last name: epaAlternates[i].name.last
+  - Unit: epaAlternates[i].address.unit
+    required: false
+  - Number and street:  epaAlternates[i].address.address
+  - Suburb: epaAlternates[i].address.city
+  - Postcode: epaAlternates[i].address.postal_code
+  - State: epaAlternates[i].address.state
+    choices:
+      - ACT: ACT
+      - New South Wales: NSW
+      - Northern Territory: NT
+      - Queensland: QLD
+      - South Australia: SA
+      - Tasmania: Tas
+      - Western Australia: WA
+      - Victoria: Vic
+    default: SA
+---

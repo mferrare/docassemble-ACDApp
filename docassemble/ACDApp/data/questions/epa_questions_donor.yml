@@ -1,0 +1,28 @@
+objects:
+  - epaDonor: Individual
+---
+question: Donor
+subquestion: |
+  Enter the full name and address of the Donor
+fields:
+  - First name:   epaDonor.name.first
+  - Middle name:  epaDonor.name.middle
+    required: false
+  - Last name:    epaDonor.name.last
+  - Unit: epaDonor.address.unit
+    required: false
+  - Number and street:  epaDonor.address.address
+  - Suburb: epaDonor.address.city
+  - Postcode: epaDonor.address.postal_code
+  - State: epaDonor.address.state
+    choices:
+      - ACT: ACT
+      - New South Wales: NSW
+      - Northern Territory: NT
+      - Queensland: QLD
+      - South Australia: SA
+      - Tasmania: Tas
+      - Western Australia: WA
+      - Victoria: Vic
+    default: SA
+---

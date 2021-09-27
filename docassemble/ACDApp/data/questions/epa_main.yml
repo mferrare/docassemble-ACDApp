@@ -1,0 +1,125 @@
+ include:
+  - epa_constants.yml
+  - epa_questions_donor.yml
+  - epa_questions_donees.yml
+  - epa_questions_alternates.yml
+  - epa_formatted_output.yml
+#   - acd_questions_epaDonor.yml
+#   - acd_questions_part2.yml
+#   - acd_questions_part3.yml
+#   - acd_questions_part4.yml
+#   - acd_questions_part5.yml
+#   - acd_questions_part6.yml
+#   - acd_attachment.yml
+---
+# Address should be formatted correctly and not
+# using US rules
+mandatory: True
+code: |
+  epaDonor.address.international = True
+  epaDonor.address.country = 'AU'
+---
+# Logo
+objects:
+  - EzraLogo: DAStaticFile.using(filename="Ezra-Legal-Logo-web-white-orange.png")
+---
+initial: True
+code: |
+  ACDlogo = '<div class="media"><img src="{}" class="mr-3" height="40"><div class="media-body"></div></div>'.format(EzraLogo.url_for())
+  set_parts(logo=ACDlogo)
+ 
+  # Make the the title/logo function as a clickable link to restart the
+  # app.
+  log(
+    "var dapagetitle = $('#dapagetitle');" +
+    "function confirmAndRestart() {" +
+    "  var restart = confirm('This will return you to the home page, clearing the current report. Are you sure you want to restart?');" +
+    "  if (restart) {" +
+    "    window.location.href = '" + url_of('restart') + "';" +
+    "  }" +
+    "}" +
+    "dapagetitle.attr('href', 'javascript:confirmAndRestart()');" +
+    "dapagetitle.attr('title', 'Restart & return to home page')",
+    "javascript"
+  )
+---
+features:
+  css: ACDApp.css
+  question back button: True
+  navigation back button: False
+---
+default screen parts:
+  post: |
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unna&display=swap" rel="stylesheet">
+---
+# Welcome Screen
+mandatory: true
+question: Enhanced Power of Attorney Form
+subquestion: |
+  A description will go here
+
+  **Disclaimer**
+
+  This app is not a substitute for legal advice.  If you would like help completing your
+  Enhanced Power of Attorney please [contact us](https://ezralegal.com.au/contact-us/)
+buttons: 
+  - Continue: continue
+  - Exit: exit
+    url: https://ezralegal.com.au
+---
+# This is the code block that drives everything
+mandatory: True
+code: |
+  # Get Donor's details
+  epaDonor
+
+  # Get the donees
+  epaDonees
+
+  # Get the alternates
+  epaAlternates
+
+  # The rest of the app is driven by the fields in the
+  # acd_form
+  final_test
+---
+event: final_test
+question: Test end screen
+subquestion: |
+  End screen for testing
+
+  ${ epaDonor }
+
+  ${ epaDonees }
+
+  ${ epaAlternates }
+attachment:
+  - docx template file: EPA_base.docx
+    valid formats:
+      - pdf
+---
+event: final_screen
+question: Your Advance Care Directive
+subquestion: |
+  Your Advance Care Directive is ready for you to download, print and sign.
+
+  **Remember that**:
+
+  * Your Substitute Decision-Makers (if any), must sign Part 2a of the form before you do
+  * Your witness must be *independent of you*
+  * Your witness must be from one of the authorised witness categories specified in this
+    app.  The full list can also be [viewed here](https://advancecaredirectives.sa.gov.au/information-for-you/additional-information/authorised-witnesses)
+  * Your witness must witness your signature
+  * Your witness must fulfil their [witness obligations](https://advancecaredirectives.sa.gov.au/14011/witnesses)
+
+  If you'd like advice on your Advance Care Directive please [contact us](https://ezralegal.com.au/contact-us/)
+  <hr>
+  **Click on the image below to download and print your Advance Care Directive**
+
+  ${ acd_form }
+buttons: 
+  - Exit: exit
+    url: https://ezralegal.com.au
+  - Restart: restart
+---

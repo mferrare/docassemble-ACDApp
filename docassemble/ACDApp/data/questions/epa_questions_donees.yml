@@ -1,0 +1,45 @@
+# Collects information for Donees.  Cannot collect for more than
+# two donees.
+---
+objects:
+  - epaDonees: DAList.using(object_type=Individual, ask_number=True)
+---
+# Controls in advance how many donees we enter
+question: Donees
+subquestion: |
+  You can delegate your power of attorney to up to ${ nice_number(EPAconstants.max_donees) }
+  donees.  
+
+  You must have at least one donee.
+
+  How many donees would you like to include in your Power of Attorney?
+fields:
+  - Number of donees: epaDonees.target_number
+    datatype: integer
+    max: ${ EPAconstants.max_donees }
+---
+question: Donees
+subquestion: |
+  Enter details for the ${ ordinal(i) } donee.
+fields:
+  - First name: epaDonees[i].name.first
+  - Middle name: epaDonees[i].name.middle
+    required: false
+  - Last name: epaDonees[i].name.last
+  - Unit: epaDonees[i].address.unit
+    required: false
+  - Number and street:  epaDonees[i].address.address
+  - Suburb: epaDonees[i].address.city
+  - Postcode: epaDonees[i].address.postal_code
+  - State: epaDonees[i].address.state
+    choices:
+      - ACT: ACT
+      - New South Wales: NSW
+      - Northern Territory: NT
+      - Queensland: QLD
+      - South Australia: SA
+      - Tasmania: Tas
+      - Western Australia: WA
+      - Victoria: Vic
+    default: SA
+---

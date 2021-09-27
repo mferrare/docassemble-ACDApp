@@ -1,0 +1,11 @@
+# Store constants in this object
+objects: 
+  - EPAconstants: DAObject
+---
+# Set the constants here
+code: |
+  # Our precedent caters for up to two donees and three alternates
+  # only - for now.
+  EPAconstants.max_donees = 2
+  EPAconstants.max_alternates = 3
+---

@@ -1,0 +1,71 @@
+# Formatting of the Individual() objects for the document template is done here
+---
+# Name
+generic object: Individual
+code: |
+  x.formatted_name = x.name.full(middle="full")
+---
+# Address
+generic object: Individual
+code: |
+  if x.address.unit:
+    unit_prefix = "Unit {} ".format(x.address.unit)
+  else:
+    unit_prefix = ""
+  
+  x.formatted_address = '{}{} {} {} {}'.format(unit_prefix, x.address.address, x.address.city.upper(), x.address.state, x.address.postal_code)
+---
+# Donor clause
+template: donor_clause
+content: |
+  I **${ epaDonor.formatted_name.upper() }** of ${ epaDonor.formatted_address }
+---
+# We construct the donee clause here.  It's easier with all the different permutations
+template: donee_clause
+content: |
+  hello
+---
+template: dc
+content: |
+  **${ epaDonees[0].formatted_name.upper() }** of ${ epaDonees[0].formatted_address }
+  % if len(epaDonees) > 1:
+  and **${ epaDonees[1].formatted_name.upper() }** of ${ epaDonees[1].formatted_address }
+  % endif
+  to be my
+  % if len(epaDonees) > 1:
+  attorneys
+  % else:
+  attorney
+  %endif
+  % if len(epaAlternates) == 0:
+  .
+  % else:
+  ${ alternates_text }
+  % endif
+---
+template: alternates_text
+content: |
+  and if the said **${ epaDonees[0].formatted_name.upper() }**
+  % if len(epaDonees) > 1:
+  and **${ epaDonees[1].formatted_name.upper() }** of ${ epaDonees[1].formatted_address }
+  % endif
+  during my lifetime
+  % if len(epaDonees) > 1:
+  die or suffer
+  % else:
+  dies or suffers
+  % endif
+  any period of legal incapacity or renounces this Power of Attorney (includeing any such
+  renunciation during a period of my legal incapacity with the leave of the Supreme Court 
+  pursuant to Section 9 of the *Powers of Attorney and Agency Act 1984* (SA) as amended)
+  then **I APPOINT**
+  % for an_alternate in epaAlternates:
+  **${ an_alternate.formatted_name.upper() }** of ${ an_alternate.formatted_address }
+  and
+  % endfor
+  to be my alternative
+  %if len(epaAlternates) > 1:
+  attorneys which expression refers to them an each of them jointly and severally.
+  % else:
+  attorney.
+  % endif
