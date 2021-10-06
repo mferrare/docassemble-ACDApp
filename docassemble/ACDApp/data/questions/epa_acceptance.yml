@@ -1,0 +1,23 @@
+# In here we manage the 'Form of Acceptance' part of the form
+---
+# List of names as a DAList so we can comma separate them
+objects:
+  epaDoneeNames: DAList.using(auto_gather=False, gathered=True)
+---
+# Prefix is 'I' or 'We' depending on the number of donees
+code: |
+  if len(epaDonees) > 1:
+    epa_prefix = 'We'
+  else:
+    epa_prefix = 'I'
+---
+# Create the DAList of epaDonee names
+code: |
+  epaDoneeNames.clear()
+  for a_donee in epaDonees:
+    epaDoneeNames.append(a_donee.formatted_name)
+---
+# Print the list of donee names as a comma separated list with an and at the end
+code: |
+  epaDoneeNamesList = epaDoneeNames.comma_and_list()
+---

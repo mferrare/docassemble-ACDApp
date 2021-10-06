@@ -23,10 +23,6 @@ content: |
 # We construct the donee clause here.  It's easier with all the different permutations
 template: donee_clause
 content: |
-  hello
----
-template: dc
-content: |
   **${ epaDonees[0].formatted_name.upper() }** of ${ epaDonees[0].formatted_address }
   % if len(epaDonees) > 1:
   and **${ epaDonees[1].formatted_name.upper() }** of ${ epaDonees[1].formatted_address }
@@ -40,7 +36,7 @@ content: |
   % if len(epaAlternates) == 0:
   .
   % else:
-  ${ alternates_text }
+  ${ alternates_text.content }
   % endif
 ---
 template: alternates_text
@@ -61,11 +57,13 @@ content: |
   then **I APPOINT**
   % for an_alternate in epaAlternates:
   **${ an_alternate.formatted_name.upper() }** of ${ an_alternate.formatted_address }
+  %if loop.index != len(epaAlternates) - 1:
   and
+  %endif
   % endfor
   to be my alternative
   %if len(epaAlternates) > 1:
-  attorneys which expression refers to them an each of them jointly and severally.
+  attorneys which expression refers to them and each of them jointly and severally.
   % else:
   attorney.
   % endif

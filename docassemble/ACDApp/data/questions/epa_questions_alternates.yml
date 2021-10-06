@@ -18,8 +18,12 @@ subquestion: |
   How many alternate donees would you like to include in your Power of Attorney?
 fields:
   - Number of alternates: epaAlternates.target_number
-    datatype: integer
-    max: ${ EPAconstants.max_alternates }
+    datatype: radio
+    choices:
+      - I do not want to include any alternates: 0
+      - I wish to include one alternate: 1
+      - I wish to include two alternates: 2
+      - I wish to include three alternates: 3
 ---
 question: Alternate Donees
 subquestion: |

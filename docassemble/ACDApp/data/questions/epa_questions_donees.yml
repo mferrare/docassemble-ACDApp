@@ -15,8 +15,10 @@ subquestion: |
   How many donees would you like to include in your Power of Attorney?
 fields:
   - Number of donees: epaDonees.target_number
-    datatype: integer
-    max: ${ EPAconstants.max_donees }
+    datatype: radio
+    choices:
+      - I wish to include one donee: 1
+      - I wish to include two donees: 2
 ---
 question: Donees
 subquestion: |

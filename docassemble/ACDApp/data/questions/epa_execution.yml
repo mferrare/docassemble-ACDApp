@@ -1,0 +1,44 @@
+# Simple file. Asks one question: whether donor wishes EPA
+# to come into force straight away or on their incapacity
+# and sets the appropriate text to display for either
+question: When EPA Becomes effective
+subquestion: |
+  You decide when your EPA becomes effective.
+
+  If you choose 'Upon Execution', your EPA becomes effective
+  as soon as all the parties sign it.  From that point 
+  onwards, your donee(s) and any alternates can exercise
+  your power of attorney
+
+  If you choose 'Upon Incapacity', your EPA becomes
+  effective if you lose the capacity to make decisions 
+  on your own. Until you lose capacity your donee(s) and
+  any alternates cannot exercise your power of attorney
+
+  I would like my Power of Attorney to become effective:
+fields:
+  - no label: epaEffective
+    datatype: radio
+    choices:
+      - Upon Execution
+      - Upon Inapacity
+---
+template: capacity_clause
+content: |
+  %if epaEffective == 'Upon Execution':
+  I DECLARE THIS POWER TO BECOME EFFECTIVE UPON THE
+  EXECUTION OF THIS DEED AND REMAIN EFFECTIVE
+  NOTWITHSTANDING THAT I MAY SUFFER ANY SUBSEQUENT
+  LEGAL INCAPACITY ONLY IN THE EVENT OF MY SUFFERING
+  ANY SUBSEQUENT LEGAL INCAPACITY AND I AUTHORISE MY
+  ATTORNEY(S) TO DO ON MY BEHALF ANYTHING I CAN LAWFULLY
+  DO BY AN ATTORNEY.
+  %elif epaEffective == 'Upon Incapacity':
+  I DECLARE THIS POWER TO BECOME EFFECTIVE ONLY IN THE
+  EVENT OF MY SUFFERING ANY SUBSEQUENT LEGAL INCAPACITY
+  AND I AUTHORISE MY ATTORNEY(S) TO DO ON MY BEHALF
+  ANYTHING I CAN LAWFULLY DO BY AN ATTORNEY.
+  %else:
+  ERROR completing form. Invalid value
+  for epaEffective: ${epaEffective}
+  %endif

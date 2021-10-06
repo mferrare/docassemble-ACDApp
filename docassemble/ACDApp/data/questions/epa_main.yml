@@ -4,6 +4,8 @@
   - epa_questions_donees.yml
   - epa_questions_alternates.yml
   - epa_formatted_output.yml
+  - epa_execution.yml
+  - epa_acceptance.yml
 #   - acd_questions_epaDonor.yml
 #   - acd_questions_part2.yml
 #   - acd_questions_part3.yml
@@ -89,11 +91,16 @@ question: Test end screen
 subquestion: |
   End screen for testing
 
-  ${ epaDonor }
+  **Donor**: ${ epaDonor }
 
-  ${ epaDonees }
+  **Donees**: ${ epaDonees }
 
-  ${ epaAlternates }
+  **Alterates** ${ epaAlternates }
+
+  **Donor Clause:**: ${donor_clause}
+
+  **Donee Clause**: ${donee_clause}
+
 attachment:
   - docx template file: EPA_base.docx
     valid formats:
