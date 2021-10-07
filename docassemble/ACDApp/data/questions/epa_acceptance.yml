@@ -6,7 +6,7 @@ objects:
 ---
 # Prefix is 'I' or 'We' depending on the number of donees
 code: |
-  if len(epaDonees) > 1:
+  if (len(epaDonees)+len(epaAlternates)) > 1:
     epa_prefix = 'We'
   else:
     epa_prefix = 'I'
