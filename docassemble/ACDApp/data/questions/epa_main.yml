@@ -6,6 +6,8 @@
   - epa_formatted_output.yml
   - epa_execution.yml
   - epa_acceptance.yml
+  - sales_pitch.yml
+  - epa_attachments.yml
 #   - acd_questions_epaDonor.yml
 #   - acd_questions_part2.yml
 #   - acd_questions_part3.yml
@@ -14,18 +16,11 @@
 #   - acd_questions_part6.yml
 #   - acd_attachment.yml
 ---
-# Address should be formatted correctly and not
-# using US rules
-mandatory: True
-code: |
-  epaDonor.address.international = True
-  epaDonor.address.country = 'AU'
----
 # Logo
 objects:
   - EzraLogo: DAStaticFile.using(filename="Ezra-Legal-Logo-web-white-orange.png")
 ---
-initial: True
+# Does some magic with the logo
 code: |
   ACDlogo = '<div class="media"><img src="{}" class="mr-3" height="40"><div class="media-body"></div></div>'.format(EzraLogo.url_for())
   set_parts(logo=ACDlogo)
@@ -44,6 +39,7 @@ code: |
     "dapagetitle.attr('title', 'Restart & return to home page')",
     "javascript"
   )
+  logo_code = True
 ---
 features:
   css: ACDApp.css
@@ -73,18 +69,28 @@ buttons:
 # This is the code block that drives everything
 mandatory: True
 code: |
+  # Set the logo stuff
+  logo_code
+
   # Get Donor's details
-  epaDonor
+  epaDonor.name.first
 
-  # Get the donees
-  epaDonees
+  # Get the donees and alternates
+  for an_item in epaDonees + epaAlternates:
+    an_item
 
-  # Get the alternates
-  epaAlternates
+  # Get execution
+  epaEffective
+
+  # Run the sales pitch
+  get_in_touch
+
+  # Send the email if contacted along with the
+  # generated EPA
 
   # The rest of the app is driven by the fields in the
   # acd_form
-  final_test
+  final_screen
 ---
 event: final_test
 question: Test end screen
@@ -101,30 +107,31 @@ subquestion: |
 
   **Donee Clause**: ${donee_clause}
 
+  **Donee list**: ${ epaDoneeNamesList }
+
+  **Customer**: ${ epaCustomer }
+
 attachment:
   - docx template file: EPA_base.docx
     valid formats:
       - pdf
 ---
 event: final_screen
-question: Your Advance Care Directive
+question: Your Enhanced Power of Attorney
 subquestion: |
-  Your Advance Care Directive is ready for you to download, print and sign.
+  Your Enhanced Power of Attorney is ready for you to download, print and sign.
 
-  **Remember that**:
+  % if get_in_touch and email_sent:
+  Thanks for getting in touch.  We will get back to you soon!
+  % elif get_in_touch and not email_sent:
+  Unfortunately there was an isue sending your email.  Please
+  [contact us](https://ezralegal.com.au/contact-us/).
+  %endif
 
-  * Your Substitute Decision-Makers (if any), must sign Part 2a of the form before you do
-  * Your witness must be *independent of you*
-  * Your witness must be from one of the authorised witness categories specified in this
-    app.  The full list can also be [viewed here](https://advancecaredirectives.sa.gov.au/information-for-you/additional-information/authorised-witnesses)
-  * Your witness must witness your signature
-  * Your witness must fulfil their [witness obligations](https://advancecaredirectives.sa.gov.au/14011/witnesses)
-
-  If you'd like advice on your Advance Care Directive please [contact us](https://ezralegal.com.au/contact-us/)
   <hr>
-  **Click on the image below to download and print your Advance Care Directive**
+  **Click on the image below to download and print your Power of Attorney**
 
-  ${ acd_form }
+  ${ epa_final }
 buttons: 
   - Exit: exit
     url: https://ezralegal.com.au

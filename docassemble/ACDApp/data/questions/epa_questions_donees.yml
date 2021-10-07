@@ -12,9 +12,9 @@ subquestion: |
 
   You must have at least one donee.
 
-  How many donees would you like to include in your Power of Attorney?
+  **How many donees would you like to include in your Power of Attorney?**
 fields:
-  - Number of donees: epaDonees.target_number
+  - no label: epaDonees.target_number
     datatype: radio
     choices:
       - I wish to include one donee: 1
@@ -22,7 +22,13 @@ fields:
 ---
 question: Donees
 subquestion: |
-  Enter details for the ${ ordinal(i) } donee.
+  Enter details for 
+  %if int(epaDonees.target_number) > 1:
+  the ${ ordinal(i) }
+  %else:
+  your
+  %endif
+  donee.
 fields:
   - First name: epaDonees[i].name.first
   - Middle name: epaDonees[i].name.middle
@@ -32,7 +38,6 @@ fields:
     required: false
   - Number and street:  epaDonees[i].address.address
   - Suburb: epaDonees[i].address.city
-  - Postcode: epaDonees[i].address.postal_code
   - State: epaDonees[i].address.state
     choices:
       - ACT: ACT
@@ -44,4 +49,5 @@ fields:
       - Western Australia: WA
       - Victoria: Vic
     default: SA
+  - Postcode: epaDonees[i].address.postal_code
 ---

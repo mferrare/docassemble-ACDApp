@@ -15,13 +15,13 @@ subquestion: |
   on your own. Until you lose capacity your donee(s) and
   any alternates cannot exercise your power of attorney
 
-  I would like my Power of Attorney to become effective:
+  **I would like my Power of Attorney to become effective...**
 fields:
   - no label: epaEffective
     datatype: radio
     choices:
       - Upon Execution
-      - Upon Inapacity
+      - Upon Incapacity
 ---
 template: capacity_clause
 content: |

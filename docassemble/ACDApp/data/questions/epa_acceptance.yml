@@ -2,7 +2,7 @@
 ---
 # List of names as a DAList so we can comma separate them
 objects:
-  epaDoneeNames: DAList.using(auto_gather=False, gathered=True)
+  epaDoneeNames: DAList.using(auto_gather=False, there_are_any=True)
 ---
 # Prefix is 'I' or 'We' depending on the number of donees
 code: |
@@ -14,8 +14,10 @@ code: |
 # Create the DAList of epaDonee names
 code: |
   epaDoneeNames.clear()
-  for a_donee in epaDonees:
+  for a_donee in epaDonees + epaAlternates:
     epaDoneeNames.append(a_donee.formatted_name)
+
+  epaDoneeNames.gathered = True
 ---
 # Print the list of donee names as a comma separated list with an and at the end
 code: |

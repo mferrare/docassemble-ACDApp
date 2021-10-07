@@ -9,7 +9,7 @@ code: |
 generic object: Individual
 code: |
   if x.address.unit:
-    unit_prefix = "Unit {} ".format(x.address.unit)
+    unit_prefix = "Unit {}, ".format(x.address.unit)
   else:
     unit_prefix = ""
   
@@ -43,7 +43,7 @@ template: alternates_text
 content: |
   and if the said **${ epaDonees[0].formatted_name.upper() }**
   % if len(epaDonees) > 1:
-  and **${ epaDonees[1].formatted_name.upper() }** of ${ epaDonees[1].formatted_address }
+  and **${ epaDonees[1].formatted_name.upper() }**
   % endif
   during my lifetime
   % if len(epaDonees) > 1:
@@ -51,7 +51,13 @@ content: |
   % else:
   dies or suffers
   % endif
-  any period of legal incapacity or renounces this Power of Attorney (includeing any such
+  any period of legal incapacity or 
+  % if len(epaDonees) > 1:
+  renounce
+  % else:
+  renounces
+  % endif
+  this Power of Attorney (including any such
   renunciation during a period of my legal incapacity with the leave of the Supreme Court 
   pursuant to Section 9 of the *Powers of Attorney and Agency Act 1984* (SA) as amended)
   then **I APPOINT**

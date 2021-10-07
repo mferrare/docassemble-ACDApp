@@ -1,0 +1,19 @@
+# Contains the attachments for the cover page and for the EPA itself and
+# the code that glues them together.
+---
+# Cover page 
+objects:
+  epa_cover: DAStaticFile.using(filename='EPA_p1.pdf')
+---
+# This is the body of the EPA
+attachment:
+  - variable name: epa_base
+    docx template file: EPA_base.docx
+    valid formats:
+      - pdf
+---
+# This joins the two together
+code: |
+  epa_final = pdf_concatenate(epa_cover, epa_base)
+  epa_final.filename = 'Power of Attorney {}.pdf'.format(epaDonor.formatted_name)
+---

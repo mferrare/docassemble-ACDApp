@@ -1,0 +1,77 @@
+#A little bit of an advertisement and ask the user if they want to be contacted
+# before giving them their EPA (or ACD or whatever)
+---
+# We'll store the customer details in an Individual() object
+objects:
+  - epaCustomer: Individual
+---
+question: Your EPA is nearly ready
+subquestion: |
+  Your EPA will be ready for you in just a moment
+
+  **We're Here to Help**
+
+  We're glad you have decided to prepare a Power of Attorney.  
+  Our experienced lawyers can assist you with preparing:
+
+  * Advance Care Directives
+  * Wills
+  * Testamentary Trusts
+  * Discretionary Trusts
+
+  And all tailored to your specific needs.
+
+  If you'd like us to contact you, please enter your contact details
+  and we will get in touch with you.
+fields:
+  - I would like to be contacted by Ezra Legal: get_in_touch
+    datatype: yesnoradio
+  - Please enter your name: epaCustomer.name
+    default: epaDonor.name
+    show if:
+      variable: get_in_touch
+      is: True
+  - Please enter your email: epaCustomer.email
+    datatype: email
+    show if:
+      variable: get_in_touch
+      is: True
+  - Please enter your mobile (optional): epaCustomer.phone
+    required: False
+    show if:
+      variable: get_in_touch
+      is: True
+---
+# Send email with contact details if requested
+code: |
+  if not get_in_touch:
+    email_sent = False
+  
+  # If we're here get_in_touch is true so let's get to it.
+  email_sent = send_email(to=EPAconstants.mail_to, template=email_message_body,
+                  attachments=[epa_final])
+---
+# Body of the email message
+template: email_message_body
+subject: |
+  Contact from EPA App
+content: |
+  **${epaCustomer.name}** has run the EPA App and has requested to be
+  contacted.
+
+  &nbsp;|&nbsp;
+  ---|---
+  **Contact Name**|${epaCustomer.name}
+  **Contact Email**|[${epaCustomer.email}](mailto:${epaCustomer.email})
+  %if epaCustomer.phone:
+  **Contact Phone**|[${epaCustomer.phone}](tel:${epaCustomer.phone})
+  %else:
+  **Contact Phone**|None supplied
+  %endif
+
+  Their EPA is attached.
+
+  Lots of love,
+
+  the EPA App
+---

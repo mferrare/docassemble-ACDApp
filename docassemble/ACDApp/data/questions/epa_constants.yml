@@ -8,4 +8,5 @@ code: |
   # only - for now.
   EPAconstants.max_donees = 2
   EPAconstants.max_alternates = 3
+  EPAconstants.mail_to = 'markf@ezralegal.com.au'
 ---
