@@ -94,9 +94,6 @@ code: |
   # Get execution
   epaEffective
 
-  # Run the sales pitch
-  get_in_touch
-
   # Send the email if contacted along with the
   # generated EPA
 
@@ -133,14 +130,6 @@ question: Your Enduring Power of Attorney
 subquestion: |
   Your Enduring Power of Attorney is ready for you to download, print and sign.
 
-  % if get_in_touch and email_sent:
-  Thanks for getting in touch.  We will get back to you soon!
-  % elif get_in_touch and not email_sent:
-  Unfortunately there was an isue sending your email.  Please
-  [contact us](https://ezralegal.com.au/contact-us/).
-  %endif
-
-  <hr>
   **Click on the image below to download and print your Power of Attorney**
 
   ${ epa_final }
