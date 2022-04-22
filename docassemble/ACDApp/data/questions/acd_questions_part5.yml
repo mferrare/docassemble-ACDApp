@@ -14,7 +14,16 @@ subquestion: |
 fields:
   - Did an interpreter help you to complete this form?: part5.used_interpreter
     datatype: yesnoradio
-  - Interpreter's full name: part5.name
+  - Interpreter's first name: part5.name.first
+    show if:
+      variable: part5.used_interpreter
+      is: true
+  - Interpreter's middle name: part5.name.middle
+    required: false
+    show if:
+      variable: part5.used_interpreter
+      is: true
+  - Interpreter's last name: part5.name.last
     show if:
       variable: part5.used_interpreter
       is: true

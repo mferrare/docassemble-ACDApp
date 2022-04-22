@@ -29,9 +29,13 @@ code: |
   # Upload data if we have it
   if 'saved_data' in url_args:
     upload_data
+    # test_decoded_data
+    clean_data
+    # test_decoded_data_2
 
   gathering_screen
   process_part2_blanks_single
+  send_and_save
   final_screen_single
 ---
 # Gathering screen
@@ -48,8 +52,8 @@ review:
 
       % if defined('part1.name.first'):
       **Name:** ${part1.name}[BR]
-      **Address:** ${part1.formatted_address}[BR]
-      **Phone:** ${part1.formatted_phone}[BR]
+      **Address:** ${part1.address}[BR]
+      **Phone:** ${part1.phone_number}[BR]
       **DOB**: ${part1.birthdate}
       % else:
       You must complete Part 1
@@ -91,7 +95,7 @@ review:
       % if defined('part4.custom'):
       **Wants custom binding refusal:** ${ part4.custom }[BR]
       % endif
-      % if defined('part4.answer'):
+      % if defined('part4.answer') and part4.custom:
       **Custom binding refusal**
 
       ${part4.answer}
@@ -131,48 +135,94 @@ review:
       % endif
 continue button field: gathering_screen
 ---
+# Provides a link to the ACD and gives option to save session
+question: Save and Send ACD
+subquestion: |
+  You can download your ACD [here](${acd_form.url_for()})
+
+  #### Email Form
+
+  Sends an email with:
+
+  1. a link for re-editing the ACD in the future; and
+  2. a copy of the form
+fields:
+  - Send email?: ACDsend_email
+    datatype: yesnoradio
+  - File number: ACDfile_number
+    required: false
+    show if:
+      variable: ACDsend_email
+      is: True
+  - Email Address: ACDemail_address
+    datatype: email
+    show if:
+      variable: ACDsend_email
+      is: True
+  - Subject: ACDsubject
+    default: "ACD for ${part1.full_name}"
+    show if:
+      variable: ACDsend_email
+      is: True
+  - Comments: ACDcomments
+    hint: Enter any additional comments you want in the email
+    show if:
+      variable: ACDsend_email
+      is: True
+continue button field: send_and_save
+---
+# Final Screen
 event: final_screen_single
 question: Advance Care Directive
 subquestion: |
-  #### Your form is ready
-
-  Click on the link below to download, or enter an email email the form
-
-  ##### Data
-  
-  **Count:**: ${ len(serial_data) }
-
-  `${serial_data}`
-attachment code: |
-  acd_form
-
-
-buttons: 
+  % if email_status == -1:
+  You elected not to send an email
+  % else:
+  % if email_status:
+  Email sent to [${ACDemail_address}](mailto:${ACDemail_address})
+  % else:
+  Problem sending email to [${ACDemail_address}](mailto:${ACDemail_address}).[BR]
+  Use the Back button to try again
+  % endif
+  % endif
+buttons:
   - Exit: exit
     url: https://ezralegal.com.au
-  - Restart: restart
+  - Start again: restart
 ---
+# Save the session data
 code: |
   ACDdata = {
     'part1' : part1.as_serializable(),
-    'part2' : part2a.as_serializable(),
+    'part2a' : part2a.as_serializable(),
+    'part2b' : part2b,
     'part3'  : part3.as_serializable(),
     'part4'  : part4.as_serializable(),
     'part5'  : part5.as_serializable(),
     'part6'  : part6.as_serializable()
   }
-  serial_data = serialise_and_encode(ACDdata)
+  sd = serialise_and_encode(ACDdata)
+  serial_data = sd.decode()
+
 ---
-event: final_screen_test
-question: Test Final Screen
+# Debugging
+question: Test Decoded Data
 subquestion: |
 
   Should have object representations
 
   ${ decoded_data }
-buttons:
-  - Exit: exit
-  - Restart: restart
+continue button field: test_decoded_data
+---
+# Debugging
+question: Test Decoded Data 2
+subquestion: |
+  After cleaning
+
+  Part 1: ${ part1 }
+
+  Part 4${ part4}
+continue button field: test_decoded_data_2
 ---
 # Extracts the data from the 'saved_data' payload, imports it into
 # the existing objects and cleans out data to re-process such as
@@ -181,31 +231,79 @@ code: |
   decoded_data = decode_and_return_data(url_args['saved_data'])
   # Upload it into our objects
   set_variables(json.loads(decoded_data), process_objects=True)
+
+  upload_data = True
+---
+code: |
+  clean_part1
+  clean_part2
+  clean_part3
+  clean_part4
+  clean_part5
+  clean_data = True
+---
+code: |
   # Delete the objects we don't want
   # Part 1
-  del part1.formatted_address
-  del part1.formatted_phone
-  del part1.full_name
-  del part1.z
-  
-  # Part2a is a list of objects so iterate through them
-  for an_entry in part2a:
-    del an_entry.formatted_address
-    del an_entry.formatted_phone
-    del an_entry.full_name
-    del an_entry.z
+  try:
+    del part1.formatted_address
+  except AttributeError:
+    pass
+  try:
+    del part1.formatted_phone
+  except AttributeError:
+    pass
+  try:
+    del part1.full_name
+  except AttributeError:
+    pass
+  try:
+    del part1.z
+  except AttributeError:
+    pass
 
+  clean_part1 = True
+---
+code: |
+  # Part2a is a list of objects so iterate through them
+  for ACDindex in range(0, len(part2a)):
+    del part2a[ACDindex].formatted_address
+    del part2a[ACDindex].formatted_phone
+    del part2a[ACDindex].full_name
+    del part2a[ACDindex].z
+
+  clean_part2 = True
+---
+code: |
   # Part 3 we only delete Z
   for an_entry in part3:
-    del an_entry.z
-  # Parts 4 and 5 are easy
-  del part4.formatted_answer
-  del part5.formatted_phone
-  del part5.formatted_address
-  del part5.z
+    try:
+      del an_entry.z
+    except AttributeError:
+      pass
 
-  # Finished!
-  upload_data = True
+  clean_part3 = True
+---
+code: |
+  # Parts 4 and 5 are easy
+  try:
+    del part4.formatted_answer
+  except AttributeError:
+    pass
+
+  clean_part4 = True
+---
+code: |
+  try:
+    # We assume if one of these doesn't exist then none exist
+    # TODO: Remove this assumption
+    del part5.formatted_phone
+    del part5.formatted_address
+    del part5.z
+  except AttributeError:
+    pass
+
+  clean_part5 = True
 ---
 # Initialises the objects
 code: |
@@ -213,4 +311,37 @@ code: |
   initialise_part3
 
   initialise_1 = True
+---
+# Sends the email.  Only if we want to
+code: |
+  if ACDsend_email:
+    email_status = send_email( to=ACDemail_address,
+                                template=ACDemail_body,
+                                attachments=[acd_form])
+  else:
+    email_status = -1
+---
+template: ACDemail_body
+subject: ${ACDsubject}
+content: |
+  #### ${ACDsubject}
+  % if ACDfile_number:
+
+  **File No:** ${ACDfile_number}
+  
+  % endif
+  % if ACDcomments:
+
+  #### Comments
+
+  ${ACDcomments}
+  % endif
+
+  To re-edit this ACD, click on [this link](${ ACDinterview_URL })
+---
+# Makes the Interview URL
+code: |
+  base_url = interview_url(reset=1)
+  payload = serial_data
+  ACDinterview_URL = '{}&saved_data={}'.format(base_url, payload)
 ---
