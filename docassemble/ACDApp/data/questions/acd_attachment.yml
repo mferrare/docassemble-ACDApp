@@ -81,23 +81,23 @@ attachment:
       # - "Date_5"        : ${ part2ab_date_day }
       # - "undefined_13"  : ${ part2ab_date_month }
       # - "undefine_14"   : ${ part2ab_date_year }
-      - "Text64"        : ${ part3[0]['answer'] }
-      - "part3_za"      : ${ part3[0]['z']}
-      - "Text65"        : ${ part3[1]['answer'] }
-      - "part3_zb"      : ${ part3[1]['z']}
-      - "Text66"        : ${ part3[2]['answer'] }
-      - "part3_zc"      : ${ part3[2]['z']}
+      - "Text64"        : ${ part3[0].answer }
+      - "part3_za"      : ${ part3[0].z}
+      - "Text65"        : ${ part3[1].answer }
+      - "part3_zb"      : ${ part3[1].z}
+      - "Text66"        : ${ part3[2].answer }
+      - "part3_zc"      : ${ part3[2].z}
       # - "initial_5"     : ${ part3_p3_initial }
       # - "initial_6"     : ${ part3_p3_initial_witness }
       # - "Date_6"        : ${ part3_p3_date_day }
       # - "undefined_15"  : ${ part3_p3_date_month }
       # - "undefined_16"  : ${ part3_p3_date_year }
-      - "Text67"        : ${ part3[3]['answer'] }
-      - "part3_zd"      : ${ part3[3]['z']}
-      - "Text68"        : ${ part3[4]['answer'] }
-      - "part3_ze"      : ${ part3[4]['z']}
-      - "Text69"        : ${ part3[5]['answer'] }
-      - "part3_zf"      : ${ part3[5]['z']}
+      - "Text67"        : ${ part3[3].answer }
+      - "part3_zd"      : ${ part3[3].z}
+      - "Text68"        : ${ part3[4].answer }
+      - "part3_ze"      : ${ part3[4].z}
+      - "Text69"        : ${ part3[5].answer }
+      - "part3_zf"      : ${ part3[5].z}
       # - "initial_7"     : ${ part3_p4_initial }
       # - "initial_8"     : ${ part3_p4_initial_witness }
       # - "Date_7"        : ${ part3_p4_date_day }

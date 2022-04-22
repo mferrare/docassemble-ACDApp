@@ -1,23 +1,33 @@
 # This file deals with part 3 of the ACD form.
-
-# We'll collect all the answers into a dictionary
-# Each key will be the number of the question ie: 'a', 'b' etc
+# Store answers in a list
 ---
 objects:
-  part3: DADict
+  - part3: DAList.using(there_are_any=True)
 ---
-# We'll store the answers in a list as they're all asked the same way
-variable name: part3
+# Pre-populate the answers with empty strings
+# For single screen mode
+code: |
+  part3.clear()
+  for ACDindex in range(0,len(part3_questions)):
+    part3.appendObject(DAObject)
+    part3[-1].answer = ''
+  
+  part3.gathered=True
+  initialise_part3 = True
+---
+# part3.there_is_another should only be true for the six questions we
+# have to ask
+code: |
+  if len(part3) < len(part3_questions):
+    part3.there_is_another = True
+  else:
+    part3.there_is_another = False
+---
+# This is a list of the questions to display
+variable name: part3_questions
 use objects: true
 data:
   - subquestion: |
-      In Part 3 of your Advance Care Directive you can specify what kinds of decisions
-      can be made for you, what you wish to avoid, what kind of health care you prefer
-      and so-on.  
-
-      If you do not wish to answer any of these questions, just press **Continue** to skip
-      to the next question.
-      <hr>
       a) When decisions are being made for me, I want people to consider the following:
   - subquestion: |
       b) Outcomes of care I wish to avoid (what I don't want to happen to me):
@@ -30,6 +40,18 @@ data:
   - subquestion: |
       f) Dying wishes:
 ---
+# Preamble for the first question
+code: |
+  part3_preamble = """
+  In Part 3 of your Advance Care Directive you can specify what kinds of decisions
+  can be made for you, what you wish to avoid, what kind of health care you prefer
+  and so-on.  
+
+  If you do not wish to answer any of these questions, just press **Continue** to skip
+  to the next question.
+  <hr>
+  """
+---
 # All questions in Part 3 have the same question: value
 code: |
   part3_question_text = 'Part 3: What is important to me - my values and wishes'
@@ -37,9 +59,13 @@ code: |
 # Generic question block
 question: ${ part3_question_text }
 subquestion: |
-  ${ part3[i]['subquestion'] }
+  % if i == 0:
+  ${part3_preamble}
+  % endif
+
+  ${ part3_questions[i]['subquestion'] }
 fields:
-  - no label: part3[i]['answer']
+  - no label: part3[i].answer
     input type: area
     required: false
 ---
@@ -49,9 +75,29 @@ fields:
 #   across that field and insert an empty formatted answer
 #   to keep the python gods happy
 code: |
-  part3[i]['formatted_answer'] = part3[i]['answer']
-  if part3[i]['answer'] == "":
-    part3[i]['z'] = "Z"
+  part3[i].formatted_answer = part3[i].answer
+  if part3[i].answer == "":
+    part3[i].z = "Z"
   else:
-    part3[i]['z'] = ""
+    part3[i].z = ""
+---
+# This is the editing screen
+question: Part 3
+subquestion: |
+  None of these questions are compulsory.  Can be left as blank
+
+  ${part3_table}
+continue button field: screens['part3']
+---
+# This is the table
+table: part3_table
+rows: part3
+columns:
+  - Question: |
+      part3_questions[row_index]['subquestion']
+  - Answer: |
+      row_item.answer
+edit: 
+  - answer
+delete buttons: false
 ---

@@ -54,3 +54,19 @@ code: |
     part4.formatted_answer = ""
     part4.z = "Z"
 ---
+# This is the question for the single scren version (acd_menu_single)
+question: Part 4
+fields:
+  - Do you wish to make a binding refusal of health care?: part4.wish
+    datatype: yesnoradio
+  - Use standard binding refusal: part4.custom
+    datatype: noyesradio
+    show if:
+      variable: part4.wish
+      is: true
+  - Custom binding refusal of health care: part4.answer
+    input type: area
+    show if:
+      variable: part4.custom
+      is: true
+continue button field: screens['part4']

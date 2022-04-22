@@ -1,0 +1,216 @@
+# This is the staff entry point.  It presents all the information to edit on
+# one screen.  It does the following:
+# - allows interview to be saved
+# - allows for import of PDF and extraction of data
+# - displays PDF for download in next screen
+---
+include:
+  - acd_main_preamble.yml
+---
+# Disable the back button in the question
+features:
+  question back button: True
+---
+# For saving the interview
+modules:
+  - .save_interview
+---
+# Sets the continue variables
+code: |
+  screens = {y: True for y in [ 'part1', 'part2',
+                                'part3', 'part4',
+                                'part5', 'part6']}
+---
+mandatory: True
+code: |
+
+  initialise_1
+
+  # Upload data if we have it
+  if 'saved_data' in url_args:
+    upload_data
+
+  gathering_screen
+  process_part2_blanks_single
+  final_screen_single
+---
+# Gathering screen
+skip undefined: False
+question: Advance Care Directive
+subquestion: |
+  Complete Parts 1 - 6 then press **Continue**
+review:
+  - label: Edit
+    fields:
+      - screens['part1']
+    button: |
+      #### Part 1
+
+      % if defined('part1.name.first'):
+      **Name:** ${part1.name}[BR]
+      **Address:** ${part1.formatted_address}[BR]
+      **Phone:** ${part1.formatted_phone}[BR]
+      **DOB**: ${part1.birthdate}
+      % else:
+      You must complete Part 1
+      % endif
+  - label: Edit
+    fields:
+      - screens['part2']
+    button: |
+      #### Part 2
+
+      % if defined('part2a[0].name.last'):
+      **Substitute Decision Makers**[BR]
+
+      % for name in part2a:
+      **Name:** ${ name }[BR]
+      % endfor
+      % else:
+      Only complete if there are substitute decision-makers
+
+      No Subsititute Decision-Makers defined
+      % endif
+  - label: Edit
+    fields:
+      - screens['part3']
+    button: |
+      #### Part 3
+
+      Only complete if necessary
+
+      Click **Edit** to edit Part 3 questions
+  - label: Edit
+    fields:
+      - screens['part4']
+    button: |
+      #### Part 4
+
+      % if defined('part4.wish'):
+      **Wants binding refusal:** ${ part4.wish }[BR]
+      % if defined('part4.custom'):
+      **Wants custom binding refusal:** ${ part4.custom }[BR]
+      % endif
+      % if defined('part4.answer'):
+      **Custom binding refusal**
+
+      ${part4.answer}
+      %endif
+      % else:
+      You must at least specify if a binding refusal is required
+
+      Click **Edit** to edit Part 4 questions
+      % endif
+  - label: Edit
+    fields:
+      - screens['part5']
+    button: |
+      #### Part 5
+
+      % if defined('part5.used_interpreter'):
+      **Needs Interpreter:** ${part5.used_interpreter}[BR]
+      % if part5.used_interpreter:
+      **Interpreter's name:** ${ part5.name }
+      % endif
+      % else:
+      You must at least specify if an interpreter is required
+
+      Click **Edit** to set up interpreter details
+      % endif
+  - label: Edit
+    fields:
+      - screens['part6']
+    button: |
+      #### Part 6
+
+      % if defined('part6.name.first'):
+      **Witness Name:** ${ part6.name }
+      % else:
+      You must at least click the **Edit** button to keep the app happy.  If you don't want to enter a witness just press **Continue** on the Witness screen.
+      No witness specified
+      % endif
+continue button field: gathering_screen
+---
+event: final_screen_single
+question: Advance Care Directive
+subquestion: |
+  #### Your form is ready
+
+  Click on the link below to download, or enter an email email the form
+
+  ##### Data
+  
+  **Count:**: ${ len(serial_data) }
+
+  `${serial_data}`
+attachment code: |
+  acd_form
+
+
+buttons: 
+  - Exit: exit
+    url: https://ezralegal.com.au
+  - Restart: restart
+---
+code: |
+  ACDdata = {
+    'part1' : part1.as_serializable(),
+    'part2' : part2a.as_serializable(),
+    'part3'  : part3.as_serializable(),
+    'part4'  : part4.as_serializable(),
+    'part5'  : part5.as_serializable(),
+    'part6'  : part6.as_serializable()
+  }
+  serial_data = serialise_and_encode(ACDdata)
+---
+event: final_screen_test
+question: Test Final Screen
+subquestion: |
+
+  Should have object representations
+
+  ${ decoded_data }
+buttons:
+  - Exit: exit
+  - Restart: restart
+---
+# Extracts the data from the 'saved_data' payload, imports it into
+# the existing objects and cleans out data to re-process such as
+# 'formatted_address', 'z', splits of date etc
+code: |
+  decoded_data = decode_and_return_data(url_args['saved_data'])
+  # Upload it into our objects
+  set_variables(json.loads(decoded_data), process_objects=True)
+  # Delete the objects we don't want
+  # Part 1
+  del part1.formatted_address
+  del part1.formatted_phone
+  del part1.full_name
+  del part1.z
+  
+  # Part2a is a list of objects so iterate through them
+  for an_entry in part2a:
+    del an_entry.formatted_address
+    del an_entry.formatted_phone
+    del an_entry.full_name
+    del an_entry.z
+
+  # Part 3 we only delete Z
+  for an_entry in part3:
+    del an_entry.z
+  # Parts 4 and 5 are easy
+  del part4.formatted_answer
+  del part5.formatted_phone
+  del part5.formatted_address
+  del part5.z
+
+  # Finished!
+  upload_data = True
+---
+# Initialises the objects
+code: |
+  initialise_part2a
+  initialise_part3
+
+  initialise_1 = True
+---

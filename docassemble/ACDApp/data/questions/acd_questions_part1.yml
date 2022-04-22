@@ -1,5 +1,39 @@
+# Contains question blocks for Part 1
+# There are question blocks for the customer interview and the single-line interview
+---
 objects:
   - part1: Individual
+---
+# This is for the acd_main_single
+# It has to come before the customer questions otherwise it will be asked in the
+# customer interview.
+question: "Part 1: Personal Details"
+fields:
+  - First name:   part1.name.first
+  - Middle name:  part1.name.middle
+    required: false
+  - Last name:    part1.name.last
+  - Contact phone number: part1.phone_number
+  - Date of Birth: part1.birthdate
+    datatype: date
+  - Unit: part1.address.unit
+    required: false
+  - Number and street:  part1.address.address
+    address autocomplete: True
+  - Suburb: part1.address.city
+  - Postcode: part1.address.postal_code
+  - State: part1.address.state
+    choices:
+      - ACT: ACT
+      - New South Wales: NSW
+      - Northern Territory: NT
+      - Queensland: QLD
+      - South Australia: SA
+      - Tasmania: Tas
+      - Western Australia: WA
+      - Victoria: Vic
+    default: SA
+continue button field: screens['part1']
 ---
 question: "Part 1: Personal Details"
 subquestion: |
@@ -10,6 +44,9 @@ fields:
   - Middle name:  part1.name.middle
     required: false
   - Last name:    part1.name.last
+  - Contact phone number: part1.phone_number
+  - Date of Birth: part1.birthdate
+    datatype: date
 ---
 question: "Part 1: Personal Details"
 subquestion: |
@@ -19,6 +56,7 @@ fields:
   - Unit: part1.address.unit
     required: false
   - Number and street:  part1.address.address
+    address autocomplete: True
   - Suburb: part1.address.city
   - Postcode: part1.address.postal_code
   - State: part1.address.state
@@ -33,11 +71,3 @@ fields:
       - Victoria: Vic
     default: SA
 ---
-question: "Part 1: Personal Details"
-subquestion: |
-  Enter contact phone number and date of birth
-fields:
-  - Contact phone number: part1.phone_number
-  - Date of Birth: part1.birthdate
-    datatype: date
-

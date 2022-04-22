@@ -1,0 +1,66 @@
+# We have more than one entry point into the ACD app.  This file is included
+# by the entry point files and contains all the setup stuff for the main program
+# such as:
+# - including the other files
+# - setting up CSS, logo etc
+# - formatting address
+# - importing web fonts
+---
+include:
+  - acd_constants.yml
+  - acd_questions_part1.yml
+  - acd_questions_part2.yml
+  - acd_questions_part2_single.yml
+  - acd_questions_part3.yml
+  - acd_questions_part4.yml
+  - acd_questions_part5.yml
+  - acd_questions_part6.yml
+  - acd_attachment.yml
+---
+# Address should be formatted correctly and not
+# using US rules
+mandatory: True
+code: |
+  part1.address.international = True
+  part1.address.country = 'AU'
+---
+# Logo
+objects:
+  - EzraLogo: DAStaticFile.using(filename="Ezra-Legal-Logo-web-white-orange.png")
+---
+initial: True
+code: |
+  ACDlogo = '<div class="media"><img src="{}" class="mr-3" height="40"><div class="media-body"></div></div>'.format(EzraLogo.url_for())
+  set_parts(logo=ACDlogo)
+ 
+  # Make the the title/logo function as a clickable link to restart the
+  # app.
+  log(
+    "var dapagetitle = $('#dapagetitle');" +
+    "function confirmAndRestart() {" +
+    "  var restart = confirm('This will return you to the home page, clearing the current report. Are you sure you want to restart?');" +
+    "  if (restart) {" +
+    "    window.location.href = '" + url_of('restart') + "';" +
+    "  }" +
+    "}" +
+    "dapagetitle.attr('href', 'javascript:confirmAndRestart()');" +
+    "dapagetitle.attr('title', 'Restart & return to home page')",
+    "javascript"
+  )
+---
+features:
+  css: ACDApp.css
+  question back button: True
+  navigation back button: False
+---
+default screen parts:
+  post: |
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unna&display=swap" rel="stylesheet">
+---
+# We want the address formatted on a single line in the usual
+# Australian way
+generic object: Individual
+code: |
+  x.formatted_address = '{} {} {} {}'.format(x.address.address, x.address.city.upper(), x.address.state, x.address.postal_code)
+---

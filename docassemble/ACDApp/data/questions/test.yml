@@ -1,0 +1,24 @@
+question: Upload file
+fields:
+  - file: the_file
+    datatype: file
+---
+code: |
+  field_list = []
+  field_list = the_file.get_pdf_fields()
+---
+mandatory: true
+question: PDF fields
+subquestion: |
+  **File path**: ${ the_file.path() }
+  List of fields
+
+  Name|Value|Tuple
+  ---|---|---
+  % for a_field in field_list:
+  ${a_field[0]}|${a_field[1]}|`${a_field}`
+  % endfor
+
+buttons:
+  - Exit: exit
+  - Restart: restart

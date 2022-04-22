@@ -28,6 +28,7 @@ fields:
       variable: part5.used_interpreter
       is: true
   - Number and street:  part5.address.address
+    address autocomplete: true
     show if:
       variable: part5.used_interpreter
       is: true
@@ -53,6 +54,7 @@ fields:
     show if:
       variable: part5.used_interpreter
       is: true
+continue button field: screens['part5']
 ---
 # If we don't have an interpreter we need to set the values to ""
 # and the 'z'.  Otherwise, we'll leave it to the generic object

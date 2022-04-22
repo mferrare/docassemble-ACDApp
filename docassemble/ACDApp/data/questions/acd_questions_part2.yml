@@ -74,6 +74,7 @@ fields:
   - Unit: part2a[i].address.unit
     required: false
   - Number and street:  part2a[i].address.address
+    address autocomplete: True
   - Suburb: part2a[i].address.city
   - Postcode: part2a[i].address.postal_code
   - State: part2a[i].address.state
@@ -144,7 +145,13 @@ code: |
 generic object: Individual
 code: |
   try:
-    x.full_name = x.name.full(middle="full")
+    # Special case as acd_main_single populates x.name.first with a dummy
+    # value but acd_main does not define it for empty entries
+    if x.name.first == '':
+      x.full_name = ""
+    else:
+      x.full_name = x.name.full(middle="full")
+
     x.formatted_address = '{} {} {} {}'.format(x.address.address, x.address.city.upper(), x.address.state, x.address.postal_code)
     x.formatted_phone = x.phone_number
     x.z = ""

@@ -10,6 +10,7 @@ objects:
 ---
 question: "Part 6: Witnessing my Advanced Care Directive"
 subquestion: |
+  % if not defined('screens'):
   You and your witness must sign Part 6 of this form and also initial every page
   in the space provided.
 
@@ -24,6 +25,9 @@ subquestion: |
    * your paid carer.
 
   If you don't yet know who will witness your ACD, you may skip this page.
+  % else:
+  Witness details
+  % endif
 fields:
   - Witness first name: part6.name.first
     required: false
@@ -80,3 +84,4 @@ fields:
       - Teacher - Primary School: Teacher
       - Teacher - Secondary School: Teacher
       - Veterniary surgeon
+continue button field: screens['part6']

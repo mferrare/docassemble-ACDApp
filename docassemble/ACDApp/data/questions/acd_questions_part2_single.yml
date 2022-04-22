@@ -1,0 +1,67 @@
+# This file contains the questions and the code required to ask the 
+# Part 2 questions for the single-page gathering version of the app
+# that is run via acd_main_single.yml
+---
+# question: "Part 2: Substitute Decision-Makers"
+# fields:
+#   - First name: part2a[i].name.first
+#   - Middle name: part2a[i].name.middle
+#     required: false
+#   - Last name: part2a[i].name.last
+#   - Date of birth: part2a[i].birthdate
+#     datatype: date
+#   - Phone number: part2a[i].phone_number
+#   - Unit: part2a[i].address.unit
+#     required: false
+#   - Number and street:  part2a[i].address.address
+#     address autocomplete: True
+#   - Suburb: part2a[i].address.city
+#   - Postcode: part2a[i].address.postal_code
+#   - State: part2a[i].address.state
+#     choices:
+#       - ACT: ACT
+#       - New South Wales: NSW
+#       - Northern Territory: NT
+#       - Queensland: QLD
+#       - South Australia: SA
+#       - Tasmania: Tas
+#       - Western Australia: WA
+#       - Victoria: Vic
+#     default: SA
+# list collect: 
+#   enable: True
+#   allow append: False
+---
+question: Part 2 Table
+subquestion: |
+
+  ${part2_table}
+continue button field: screens['part2']
+---
+table: part2_table
+rows: part2a
+columns: 
+  - Name: |
+      row_item.name.full()
+edit:
+  - name.first
+delete buttons: False
+---
+# Populate part2a with empty records to start off with
+code: |
+  part2a.clear()
+  for index in range(0, ACDconstants.max_decision_makers):
+    part2a.appendObject(Individual)
+    part2a[-1].name.first = ''
+  
+  part2a.gathered = True
+  initialise_part2a = True
+---
+# I need a separate routine to identify blanks for the single menu as
+# all three SDMs are always defined
+code: |
+  for ACDentry in part2a:
+    ACDentry.z
+
+  process_part2_blanks_single = True
+---
