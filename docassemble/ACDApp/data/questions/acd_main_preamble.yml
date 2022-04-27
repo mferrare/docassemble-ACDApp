@@ -64,3 +64,11 @@ generic object: Individual
 code: |
   x.formatted_address = '{} {} {} {}'.format(x.address.address, x.address.city.upper(), x.address.state, x.address.postal_code)
 ---
+# Sets the continue variables
+# This is for the single-screen version only (acd_main_single) but has to be included
+# for the acd_main as well as there are continue button fields that depend on this
+code: |
+  screens = {y: True for y in [ 'part1', 'part2',
+                                'part3', 'part4',
+                                'part5', 'part6', 'part7']}
+---

@@ -7,6 +7,9 @@
 include:
   - acd_main_preamble.yml
 ---
+imports:
+  - re
+---
 # Disable the back button in the question
 features:
   question back button: True
@@ -14,12 +17,6 @@ features:
 # For saving the interview
 modules:
   - .save_interview
----
-# Sets the continue variables
-code: |
-  screens = {y: True for y in [ 'part1', 'part2',
-                                'part3', 'part4',
-                                'part5', 'part6']}
 ---
 mandatory: True
 code: |
@@ -267,10 +264,22 @@ code: |
 code: |
   # Part2a is a list of objects so iterate through them
   for ACDindex in range(0, len(part2a)):
-    del part2a[ACDindex].formatted_address
-    del part2a[ACDindex].formatted_phone
-    del part2a[ACDindex].full_name
-    del part2a[ACDindex].z
+    try:
+      del part2a[ACDindex].formatted_address
+    except AttributeError:
+      pass
+    try:
+      del part2a[ACDindex].formatted_phone
+    except AttributeError:
+      pass
+    try:
+      del part2a[ACDindex].full_name
+    except AttributeError:
+      pass
+    try:
+      del part2a[ACDindex].z
+    except AttributeError:
+      pass
 
   clean_part2 = True
 ---
@@ -341,7 +350,8 @@ content: |
 ---
 # Makes the Interview URL
 code: |
-  base_url = interview_url(reset=1)
+  base_url = interview_url()
+  no_session_url = re.sub('&session=[^&]+', '', base_url)
   payload = serial_data
-  ACDinterview_URL = '{}&saved_data={}'.format(base_url, payload)
+  ACDinterview_URL = '{}&new_session=1&saved_data={}'.format(no_session_url, payload)
 ---

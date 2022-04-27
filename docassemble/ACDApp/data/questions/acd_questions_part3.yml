@@ -2,7 +2,7 @@
 # Store answers in a list
 ---
 objects:
-  - part3: DAList.using(there_are_any=True)
+  - part3: DAList.using(object_type=DAObject, there_are_any=True)
 ---
 # Pre-populate the answers with empty strings
 # For single screen mode

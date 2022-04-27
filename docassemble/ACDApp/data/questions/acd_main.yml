@@ -37,11 +37,9 @@ buttons:
 # This is the code block that drives everything
 mandatory: True
 code: |
-  # Start off by asking the details of the
-  # person completing the ACD
-
-  # Will call questions by picking first question in each
-  # question block for now
+  # Need to initialise screens so we don't get errors in
+  # parts 5 and 6
+  screens
 
   # We always call Part 1
   part1.name.first
