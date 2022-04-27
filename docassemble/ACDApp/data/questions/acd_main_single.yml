@@ -162,6 +162,8 @@ fields:
       variable: ACDsend_email
       is: True
   - Comments: ACDcomments
+    required: false
+    input type: area
     hint: Enter any additional comments you want in the email
     show if:
       variable: ACDsend_email
@@ -324,21 +326,19 @@ code: |
 # Sends the email.  Only if we want to
 code: |
   if ACDsend_email:
-    email_status = send_email( to=ACDemail_address,
+    email_status = send_email(  sender=ACDemail_sender,
+                                to=ACDemail_address,
                                 template=ACDemail_body,
                                 attachments=[acd_form])
   else:
     email_status = -1
 ---
 template: ACDemail_body
-subject: ${ACDsubject}
+subject: ${ACDdisplay_subject}
 content: |
-  #### ${ACDsubject}
-  % if ACDfile_number:
+  This ACD has been saved.  To edit, 
+  click on [this link](${ ACDinterview_URL })
 
-  **File No:** ${ACDfile_number}
-  
-  % endif
   % if ACDcomments:
 
   #### Comments
@@ -346,12 +346,25 @@ content: |
   ${ACDcomments}
   % endif
 
-  To re-edit this ACD, click on [this link](${ ACDinterview_URL })
+  Lots of love,
+
+  The Ezra ACD App
 ---
 # Makes the Interview URL
 code: |
-  base_url = interview_url()
-  no_session_url = re.sub('&session=[^&]+', '', base_url)
-  payload = serial_data
-  ACDinterview_URL = '{}&new_session=1&saved_data={}'.format(no_session_url, payload)
+  ACDinterview_URL = interview_url(new_session=1, saved_data=serial_data)
+---
+# Subject for email.  We add the file number
+# if it exists
+code: |
+  if ACDfile_number:
+    ACDdisplay_subject = '{} (EL:{})'.format(ACDsubject, ACDfile_number)
+  else:
+    ACDdisplay_subject = ACDsubject
+---
+# Set a noreply address for the email
+code: |
+  ACDemail_sender = Individual()
+  ACDemail_sender.name = 'Ezra ACD App (noreply)'
+  ACDemail_sender.email = 'noreply@achelp.net'
 ---
