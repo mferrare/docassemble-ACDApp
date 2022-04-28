@@ -36,8 +36,10 @@ fields:
   - Witness last name: part6.name.last
     required: False
   - Witness phone number: part6.phone_number
+    default: 08 8231 6100
     required: false
   - Witness Authorised  Category: part6.category
+    default: Lawyer
     required: False
     choices:
       - Australia Post agent with more than 5 years of service: Australia Post agent
