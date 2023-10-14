@@ -17,6 +17,20 @@ include:
   - acd_questions_part6.yml
   - acd_attachment.yml
 ---
+# Metadata about the interview
+metadata: 
+  title: |
+    Ezra Legal Advance Care Directive App
+  short title: |
+    Ezra ACD App
+  description: |
+    Generates a completed Advance Care Directive (ACD) compliant with South
+    Australian legislation
+  authors:
+    - name: Mark Ferraretto
+      organisation: Ezra Legal
+  revision date: 2023-01-13
+---
 # Address should be formatted correctly and not
 # using US rules
 mandatory: True

@@ -26,12 +26,9 @@ content: |
   **${ epaDonees[0].formatted_name.upper() }** of ${ epaDonees[0].formatted_address }
   % if len(epaDonees) > 1:
   and **${ epaDonees[1].formatted_name.upper() }** of ${ epaDonees[1].formatted_address }
-  % endif
-  to be my
-  % if len(epaDonees) > 1:
-  attorneys
+  ${donee_joint_and_several.upper()} to be my attorneys
   % else:
-  attorney
+  to be my attorney
   %endif
   % if len(epaAlternates) == 0:
   .

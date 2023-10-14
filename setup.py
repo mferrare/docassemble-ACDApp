@@ -6,6 +6,7 @@ from distutils.util import convert_path
 
 standard_exclude = ('*.pyc', '*~', '.*', '*.bak', '*.swp*')
 standard_exclude_directories = ('.*', 'CVS', '_darcs', './build', './dist', 'EGG-INFO', '*.egg-info')
+
 def find_package_data(where='.', package='', exclude=standard_exclude, exclude_directories=standard_exclude_directories):
     out = {}
     stack = [(convert_path(where), '', package)]
@@ -45,7 +46,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
 setup(name='docassemble.ACDApp',
       version='1.0',
       description=('An app to automate completing an Advanced Care Directive in South Australia'),
-      long_description='# docassemble.ACDApp\n\nAn app to automate completing an Advanced Care Directive in South Australia\n\n## Author\n\nMark Ferraretto, mark@ferraretto.com\n\n',
+      long_description='# docassemble.ACDApp\r\n\r\nAn app to automate completing an Advanced Care Directive in South Australia\r\n\r\n## Author\r\n\r\nMark Ferraretto, mark@ferraretto.com\r\n\r\n',
       long_description_content_type='text/markdown',
       author='Mark Ferraretto',
       author_email='mark@ferraretto.com',

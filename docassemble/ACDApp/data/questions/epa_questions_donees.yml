@@ -51,3 +51,18 @@ fields:
     default: SA
   - Postcode: epaDonees[i].address.postal_code
 ---
+question: How should your donees act?
+subquestion: |
+  You can nominate for your donees to make decisions together (jointly) or you can
+  nominate for each of your donees to act independently of the other (jointly and severally).
+  
+  If your donees act jointly, it means both donees must come to the same decision, otherwise
+  neither can act on your behalf.  If your donees act jointly and severally, then one doneee may
+  make a decision without consulting the other donee first.
+fields:
+  - I want my donees to act: donee_joint_and_several
+    datatype: radio
+    choices:
+      - Jointly: jointly
+      - Jointly and severally: jointly and severally
+---
